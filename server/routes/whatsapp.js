@@ -3,15 +3,17 @@ const db = require("../config/db");
 
 const router = express.Router();
 
-const buildRedirectUrl = (itemId) => {
-  const baseUrl = "http://localhost:5000/api/whatsapp-link/open";
+const buildRedirectUrl = (req, itemId) => {
+  const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+  const host = req.get("host");
+  const baseUrl = `${protocol}://${host}/api/whatsapp-link/open`;
   return itemId ? `${baseUrl}?itemId=${encodeURIComponent(itemId)}` : baseUrl;
 };
 
 router.get("/", (req, res) => {
   try {
     const { itemId } = req.query;
-    res.json({ url: buildRedirectUrl(itemId) });
+    res.json({ url: buildRedirectUrl(req, itemId) });
   } catch (error) {
     res.status(500).json({ error: error.message || "Failed to build WhatsApp link" });
   }
