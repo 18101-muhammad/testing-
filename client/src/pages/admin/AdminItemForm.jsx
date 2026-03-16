@@ -6,6 +6,12 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import { useAuth } from "../../context/AuthContext";
 
 const eraOptions = [
+  "Victorian",
+  "Georgian",
+  "Art Deco",
+  "Edwardian",
+  "Tudor",
+  "Modern",
   "Early 19th Century",
   "Mid 19th Century",
   "Late 19th Century",
