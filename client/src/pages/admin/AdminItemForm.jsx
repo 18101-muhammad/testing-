@@ -5,7 +5,14 @@ import AdminShell from "../../components/AdminShell";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useAuth } from "../../context/AuthContext";
 
-const eraOptions = ["Victorian", "Georgian", "Art Deco", "Edwardian", "Tudor", "Modern"];
+const eraOptions = [
+  "Early 19th Century",
+  "Mid 19th Century",
+  "Late 19th Century",
+  "Early 20th Century",
+  "Mid 20th Century",
+  "Late 20th Century",
+];
 const conditionOptions = ["Excellent", "Very Good", "Good", "Fair", "Poor"];
 
 const emptyForm = {
@@ -13,7 +20,7 @@ const emptyForm = {
   description: "",
   price: "",
   category: "",
-  era: "Victorian",
+  era: "Early 19th Century",
   condition: "Excellent",
   featured: false,
   sold: false,
@@ -51,7 +58,7 @@ export default function AdminItemForm() {
             description: item.description || "",
             price: item.price || "",
             category: item.category?._id || item.category?.id || item.category || "",
-            era: item.era || "Victorian",
+            era: item.era || "Early 19th Century",
             condition: item.condition || "Excellent",
             featured: Boolean(item.featured),
             sold: Boolean(item.sold),
