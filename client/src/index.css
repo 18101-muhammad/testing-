@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-antique-cream font-body text-antique-dark antialiased;
+    background-image:
+      radial-gradient(circle at top, rgba(201, 168, 76, 0.08), transparent 28%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.72));
+    margin: 0;
+  }
+
+  * {
+    @apply transition duration-200;
+  }
+}
+
+@layer components {
+  .section-shell {
+    @apply mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24;
+  }
+
+  .section-heading {
+    @apply mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.32em] text-antique-gold;
+  }
+
+  .section-title {
+    @apply mt-3 font-display text-4xl text-antique-navy sm:text-5xl;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center rounded-full bg-antique-gold px-6 py-3 font-semibold text-antique-navy shadow-soft hover:bg-[#b89435];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center rounded-full border border-antique-gold/35 px-6 py-3 font-semibold text-antique-navy hover:border-antique-gold hover:bg-antique-light-gold;
+  }
+
+  .form-input {
+    @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-antique-dark outline-none ring-0 placeholder:text-slate-400 focus:border-antique-gold;
+  }
+
+  .admin-input {
+    @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none placeholder:text-slate-400 focus:border-slate-900;
+  }
+
+  .admin-label {
+    @apply text-sm font-semibold text-slate-700;
+  }
+
+  .admin-button {
+    @apply inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white hover:bg-slate-800;
+  }
+
+  .admin-button-secondary {
+    @apply inline-flex w-full items-center justify-center rounded-2xl border border-slate-200 px-5 py-3 font-semibold text-slate-700 hover:bg-slate-100;
+  }
+
+  .hero-grid {
+    background-image:
+      linear-gradient(125deg, rgba(17, 27, 49, 0.96), rgba(26, 39, 68, 0.92)),
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: auto, 36px 36px, 36px 36px;
+  }
+}
+
+@layer utilities {
+  .shadow-soft {
+    box-shadow: 0 18px 50px rgba(17, 27, 49, 0.08);
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.8s ease-out;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

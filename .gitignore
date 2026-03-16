@@ -1,0 +1,11 @@
+client/node_modules/
+client/build/
+client/devserver.log
+client/devserver.err.log
+server/node_modules/
+server/db/*.db
+server/uploads/*
+!server/uploads/.gitkeep
+server/server.log
+server/server.err.log
+server/.env
