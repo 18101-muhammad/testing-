@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { useSearchParams } from "react-router-dom";
 import { submitEnquiry } from "../../api/api";
 import WhatsAppButton from "../../components/WhatsAppButton";
 
@@ -11,7 +12,9 @@ const initialForm = {
 };
 
 export default function Contact() {
-  const [form, setForm] = useState(initialForm);
+  const [searchParams] = useSearchParams();
+  const initialItemReference = searchParams.get("itemReference") || "";
+  const [form, setForm] = useState({ ...initialForm, itemReference: initialItemReference });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");

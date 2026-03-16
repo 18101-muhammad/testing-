@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { buildImageUrl, getItemById, getItems } from "../../api/api";
 import ItemCard from "../../components/ItemCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
@@ -118,6 +118,13 @@ export default function ItemDetail() {
             <p className="text-4xl font-bold text-antique-gold">
               {item.price != null ? `€${Number(item.price).toLocaleString()}` : "Price on request"}
             </p>
+
+            <Link
+              className="btn-primary justify-center"
+              to={`/contact?itemReference=${encodeURIComponent(item.title)}`}
+            >
+              Enquire
+            </Link>
 
             <p className="text-base leading-8 text-antique-muted">{item.description}</p>
 
