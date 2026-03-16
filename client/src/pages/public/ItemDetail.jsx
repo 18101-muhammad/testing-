@@ -23,7 +23,7 @@ export default function ItemDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [buyNowOpen, setBuyNowOpen] = useState(false);
-  const [buyNowForm, setBuyNowForm] = useState({ name: "", email: "", phone: "" });
+  const [buyNowForm, setBuyNowForm] = useState({ name: "", email: "", phone: "", comment: "" });
   const [buyNowLoading, setBuyNowLoading] = useState(false);
   const [buyNowError, setBuyNowError] = useState("");
   const [buyNowSuccess, setBuyNowSuccess] = useState("");
@@ -94,10 +94,10 @@ export default function ItemDetail() {
         phone: buyNowForm.phone,
         itemId,
         itemReference: item.title,
-        message: `Buy Now request for ${item.title} (${formattedPrice}). Buyer would like to proceed with purchase.`,
+        message: `Buy Now request for ${item.title} (${formattedPrice}). Buyer would like to proceed with purchase.${buyNowForm.comment ? ` Comment: ${buyNowForm.comment}` : ""}`,
       });
       setBuyNowSuccess("Thank you. We will contact you shortly.");
-      setBuyNowForm({ name: "", email: "", phone: "" });
+      setBuyNowForm({ name: "", email: "", phone: "", comment: "" });
     } catch {
       setBuyNowError("We could not submit your purchase enquiry right now. Please try again.");
     } finally {
@@ -234,6 +234,13 @@ export default function ItemDetail() {
                 placeholder="Phone number"
                 required
                 value={buyNowForm.phone}
+              />
+              <textarea
+                className="form-input min-h-[120px]"
+                name="comment"
+                onChange={handleBuyNowChange}
+                placeholder="Comment (optional)"
+                value={buyNowForm.comment}
               />
 
               {buyNowSuccess ? <p className="rounded-2xl bg-emerald-50 p-4 text-emerald-700">{buyNowSuccess}</p> : null}
