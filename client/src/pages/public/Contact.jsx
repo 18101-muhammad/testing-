@@ -14,7 +14,12 @@ const initialForm = {
 export default function Contact() {
   const [searchParams] = useSearchParams();
   const initialItemReference = searchParams.get("itemReference") || "";
-  const [form, setForm] = useState({ ...initialForm, itemReference: initialItemReference });
+  const initialMessage = searchParams.get("message") || "";
+  const [form, setForm] = useState({
+    ...initialForm,
+    itemReference: initialItemReference,
+    message: initialMessage,
+  });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
