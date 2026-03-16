@@ -80,6 +80,7 @@ export default function AdminEnquiries() {
                 <tr>
                   <th className="px-4 py-4 font-semibold">Name</th>
                   <th className="px-4 py-4 font-semibold">Email</th>
+                  <th className="px-4 py-4 font-semibold">Phone Number</th>
                   <th className="px-4 py-4 font-semibold">Message</th>
                   <th className="px-4 py-4 font-semibold">Date</th>
                   <th className="px-4 py-4 font-semibold">Item</th>
@@ -96,6 +97,7 @@ export default function AdminEnquiries() {
                       <tr className={`cursor-pointer border-t border-slate-100 ${!enquiry.read ? "bg-amber-50/60" : ""}`} onClick={() => setExpandedId(expanded ? "" : id)}>
                         <td className="px-4 py-4 font-semibold text-slate-900">{enquiry.name}</td>
                         <td className="px-4 py-4 text-slate-600">{enquiry.email}</td>
+                        <td className="px-4 py-4 text-slate-600">{enquiry.phone || "-"}</td>
                         <td className="px-4 py-4 text-slate-600">
                           {(enquiry.message || "").slice(0, 60)}
                           {(enquiry.message || "").length > 60 ? "..." : ""}

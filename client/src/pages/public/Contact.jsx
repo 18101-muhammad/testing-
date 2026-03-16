@@ -7,6 +7,7 @@ import WhatsAppButton from "../../components/WhatsAppButton";
 const initialForm = {
   name: "",
   email: "",
+  phone: "",
   message: "",
   itemReference: "",
 };
@@ -60,6 +61,7 @@ export default function Contact() {
             <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
               <input className="form-input" name="name" onChange={handleChange} placeholder="Your name" required value={form.name} />
               <input className="form-input" name="email" onChange={handleChange} placeholder="Email address" required type="email" value={form.email} />
+              <input className="form-input" name="phone" onChange={handleChange} placeholder="Phone number" required value={form.phone} />
               <input className="form-input" name="itemReference" onChange={handleChange} placeholder="Item reference (optional)" value={form.itemReference} />
               <textarea className="form-input min-h-[180px]" name="message" onChange={handleChange} placeholder="Tell us what caught your eye" required value={form.message} />
 
