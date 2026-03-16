@@ -78,7 +78,7 @@ export default function ItemDetail() {
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-4">
             <div className="relative overflow-hidden rounded-[32px] bg-white shadow-soft">
-              <img alt={item.title} className="aspect-[4/3] w-full object-cover" src={mainImage} />
+              <img alt={item.title} className="aspect-[4/3] w-full bg-antique-light-gold object-contain p-4" src={mainImage} />
               {item.sold ? (
                 <span className="absolute left-5 top-5 rounded-full bg-red-700 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">
                   SOLD
