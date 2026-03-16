@@ -121,6 +121,7 @@ export default function AdminEnquiries() {
                       {expanded ? (
                         <tr className="border-t border-slate-100 bg-slate-50">
                           <td className="px-4 py-4 text-slate-700" colSpan="7">
+                            {enquiry.phone ? <p className="mb-2 text-sm font-semibold text-slate-800">Phone: {enquiry.phone}</p> : null}
                             <p className="text-sm leading-7">{enquiry.message}</p>
                           </td>
                         </tr>

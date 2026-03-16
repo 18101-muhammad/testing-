@@ -27,9 +27,9 @@ const items = [
 ];
 
 const sampleEnquiries = [
-  ["Aoife Murphy", "aoife@example.com", "Is the Victorian desk available for delivery within Dublin?", 1, null, 0],
-  ["Liam Byrne", "liam@example.com", "Could you share more photos of the silver tea set?", 11, null, 1],
-  ["Sophie Walsh", "sophie@example.com", "I am looking for a decorative antique mirror. Can you help source one?", null, "General sourcing request", 0],
+  ["Aoife Murphy", "aoife@example.com", "+353860001111", "Is the Victorian desk available for delivery within Dublin?", 1, null, 0],
+  ["Liam Byrne", "liam@example.com", "+353860002222", "Could you share more photos of the silver tea set?", 11, null, 1],
+  ["Sophie Walsh", "sophie@example.com", "+353860003333", "I am looking for a decorative antique mirror. Can you help source one?", null, "General sourcing request", 0],
 ];
 
 const seed = async () => {
@@ -48,8 +48,8 @@ const seed = async () => {
   `);
   const insertAdmin = db.prepare("INSERT INTO admins (email, password_hash) VALUES (?, ?)");
   const insertEnquiry = db.prepare(`
-    INSERT INTO enquiries (name, email, message, item_id, item_reference, read)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO enquiries (name, email, phone, message, item_id, item_reference, read)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
   `);
 
   const categoryIdBySlug = {};
@@ -75,8 +75,8 @@ const seed = async () => {
   const passwordHash = await bcrypt.hash("Admin1234!", 10);
   insertAdmin.run("admin@antiqueshop.com", passwordHash);
 
-  sampleEnquiries.forEach(([name, email, message, itemId, itemReference, read]) => {
-    insertEnquiry.run(name, email, message, itemId, itemReference, read);
+  sampleEnquiries.forEach(([name, email, phone, message, itemId, itemReference, read]) => {
+    insertEnquiry.run(name, email, phone, message, itemId, itemReference, read);
   });
 
   console.log("✓ Database seeded!");

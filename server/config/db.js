@@ -55,6 +55,9 @@ const enquiryColumns = db.prepare("PRAGMA table_info(enquiries)").all();
 if (!enquiryColumns.some((column) => column.name === "item_reference")) {
   db.exec("ALTER TABLE enquiries ADD COLUMN item_reference TEXT");
 }
+if (!enquiryColumns.some((column) => column.name === "phone")) {
+  db.exec("ALTER TABLE enquiries ADD COLUMN phone TEXT");
+}
 
 console.log("SQLite database ready at", process.env.DB_PATH);
 

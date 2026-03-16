@@ -23,7 +23,7 @@ export default function ItemDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [buyNowOpen, setBuyNowOpen] = useState(false);
-  const [buyNowForm, setBuyNowForm] = useState({ name: "", email: "" });
+  const [buyNowForm, setBuyNowForm] = useState({ name: "", email: "", phone: "" });
   const [buyNowLoading, setBuyNowLoading] = useState(false);
   const [buyNowError, setBuyNowError] = useState("");
   const [buyNowSuccess, setBuyNowSuccess] = useState("");
@@ -91,12 +91,13 @@ export default function ItemDetail() {
       await submitEnquiry({
         name: buyNowForm.name,
         email: buyNowForm.email,
+        phone: buyNowForm.phone,
         itemId,
         itemReference: item.title,
         message: `Buy Now request for ${item.title} (${formattedPrice}). Buyer would like to proceed with purchase.`,
       });
-      setBuyNowSuccess("Thank you. Your purchase enquiry has been sent.");
-      setBuyNowForm({ name: "", email: "" });
+      setBuyNowSuccess("Thank you. We will contact you shortly.");
+      setBuyNowForm({ name: "", email: "", phone: "" });
     } catch {
       setBuyNowError("We could not submit your purchase enquiry right now. Please try again.");
     } finally {
@@ -225,6 +226,14 @@ export default function ItemDetail() {
                 required
                 type="email"
                 value={buyNowForm.email}
+              />
+              <input
+                className="form-input"
+                name="phone"
+                onChange={handleBuyNowChange}
+                placeholder="Phone number"
+                required
+                value={buyNowForm.phone}
               />
 
               {buyNowSuccess ? <p className="rounded-2xl bg-emerald-50 p-4 text-emerald-700">{buyNowSuccess}</p> : null}
