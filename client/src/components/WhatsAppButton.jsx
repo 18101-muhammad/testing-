@@ -3,12 +3,15 @@ import { getWhatsAppLink } from "../api/api";
 
 const DEFAULT_WHATSAPP_NUMBER = "353868369203";
 
+const createWhatsAppUrl = (phone, message) =>
+  `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+
 const buildFallbackUrl = (itemId) => {
   const message = itemId
     ? "Hi, I would like to know more about this item."
     : "Hi, I'd like to know more about your antique shop.";
 
-  return `https://wa.me/${DEFAULT_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  return createWhatsAppUrl(DEFAULT_WHATSAPP_NUMBER, message);
 };
 
 export default function WhatsAppButton({ itemId, label = "Enquire via WhatsApp", className = "" }) {
@@ -26,9 +29,9 @@ export default function WhatsAppButton({ itemId, label = "Enquire via WhatsApp",
         throw new Error("WhatsApp link is unavailable.");
       }
 
-      window.open(url, "_blank", "noopener,noreferrer");
+      window.location.assign(url);
     } catch {
-      window.open(buildFallbackUrl(itemId), "_blank", "noopener,noreferrer");
+      window.location.assign(buildFallbackUrl(itemId));
       setError("");
     } finally {
       setLoading(false);

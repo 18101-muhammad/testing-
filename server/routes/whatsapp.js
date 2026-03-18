@@ -9,6 +9,9 @@ const normalizeWhatsAppNumber = (value) => {
   return digitsOnly || DEFAULT_WHATSAPP_NUMBER;
 };
 
+const createWhatsAppUrl = (phone, message) =>
+  `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+
 const buildWhatsAppUrl = (itemId) => {
   const whatsappNumber = normalizeWhatsAppNumber(process.env.WHATSAPP_NUMBER);
   let message = "Hi, I'd like to know more about your antique shop.";
@@ -20,7 +23,7 @@ const buildWhatsAppUrl = (itemId) => {
     }
   }
 
-  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  return createWhatsAppUrl(whatsappNumber, message);
 };
 
 router.get("/", (req, res) => {
