@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import Sortable from "sortablejs";
 import { useNavigate, useParams } from "react-router-dom";
 import { buildImageUrl, createItem, getAdminCategories, getItemById, updateItem } from "../../api/api";
 import AdminShell from "../../components/AdminShell";
@@ -48,6 +49,7 @@ export default function AdminItemForm() {
   const [loading, setLoading] = useState(isEditMode);
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState("");
+  const previewGridRef = useRef(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -89,6 +91,31 @@ export default function AdminItemForm() {
     },
     [previews]
   );
+
+  useEffect(() => {
+    if (!previewGridRef.current || previews.length < 2) {
+      return undefined;
+    }
+
+    const sortable = Sortable.create(previewGridRef.current, {
+      animation: 180,
+      ghostClass: "opacity-60",
+      onEnd: ({ oldIndex, newIndex }) => {
+        if (oldIndex == null || newIndex == null || oldIndex === newIndex) {
+          return;
+        }
+
+        setFiles((current) => {
+          const next = [...current];
+          const [moved] = next.splice(oldIndex, 1);
+          next.splice(newIndex, 0, moved);
+          return next;
+        });
+      },
+    });
+
+    return () => sortable.destroy();
+  }, [previews.length]);
 
   const validate = () => {
     const nextErrors = {};
@@ -238,13 +265,21 @@ export default function AdminItemForm() {
           <input accept=".jpg,.jpeg,.png,.webp" className="admin-input" id="images" multiple onChange={(event) => setFiles(Array.from(event.target.files || []))} type="file" />
           {errors.images ? <p className="text-sm text-red-600">{errors.images}</p> : null}
           {previews.length ? (
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-              {previews.map((preview) => (
-                <div className="overflow-hidden rounded-2xl border border-slate-200" key={preview.name}>
-                  <img alt={preview.name} className="aspect-square w-full object-cover" src={preview.url} />
-                </div>
-              ))}
-            </div>
+            <>
+              <p className="text-sm text-slate-500">Drag to reorder images. The first image will be used as the main image.</p>
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-4" ref={previewGridRef}>
+                {previews.map((preview, index) => (
+                  <div className="overflow-hidden rounded-2xl border border-slate-200" key={`${preview.name}-${index}`}>
+                    {index === 0 ? (
+                      <div className="bg-antique-gold px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-antique-navy">Main image</div>
+                    ) : null}
+                    <div className="cursor-grab active:cursor-grabbing">
+                      <img alt={preview.name} className="aspect-square w-full object-cover" src={preview.url} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           ) : null}
         </div>
 
