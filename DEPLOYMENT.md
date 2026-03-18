@@ -95,4 +95,4 @@ After the secrets are created and the EC2 setup is done:
 
 - This setup is for a single EC2 instance because the app uses SQLite.
 - Keep `server.env`, `client.env.production`, the SQLite database, and uploads only on the server.
-- If you later add a domain and HTTPS, update `CLIENT_URL`, `REACT_APP_MEDIA_BASE_URL`, and the Nginx config.
+- When using `theantiqueroom.ie`, keep `CLIENT_URL`, `REACT_APP_MEDIA_BASE_URL`, and the deployed Nginx config aligned with the HTTPS certificate paths on EC2.
