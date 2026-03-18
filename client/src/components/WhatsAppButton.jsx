@@ -62,7 +62,6 @@ export default function WhatsAppButton({
         href={href}
         onClick={handleClick}
       >
-        <span className="text-lg">â—”</span>
         {label}
       </a>
     </div>
