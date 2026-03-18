@@ -2,9 +2,15 @@ const express = require("express");
 const db = require("../config/db");
 
 const router = express.Router();
+const DEFAULT_WHATSAPP_NUMBER = "353868369203";
+
+const normalizeWhatsAppNumber = (value) => {
+  const digitsOnly = String(value || "").replace(/\D/g, "");
+  return digitsOnly || DEFAULT_WHATSAPP_NUMBER;
+};
 
 const buildWhatsAppUrl = (itemId) => {
-  const whatsappNumber = process.env.WHATSAPP_NUMBER;
+  const whatsappNumber = normalizeWhatsAppNumber(process.env.WHATSAPP_NUMBER);
   let message = "Hi, I'd like to know more about your antique shop.";
 
   if (itemId) {

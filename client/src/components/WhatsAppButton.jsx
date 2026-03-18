@@ -1,6 +1,16 @@
 import { useState } from "react";
 import { getWhatsAppLink } from "../api/api";
 
+const DEFAULT_WHATSAPP_NUMBER = "353868369203";
+
+const buildFallbackUrl = (itemId) => {
+  const message = itemId
+    ? "Hi, I would like to know more about this item."
+    : "Hi, I'd like to know more about your antique shop.";
+
+  return `https://wa.me/${DEFAULT_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+};
+
 export default function WhatsAppButton({ itemId, label = "Enquire via WhatsApp", className = "" }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -18,7 +28,8 @@ export default function WhatsAppButton({ itemId, label = "Enquire via WhatsApp",
 
       window.open(url, "_blank", "noopener,noreferrer");
     } catch {
-      setError("WhatsApp is unavailable right now. Please try again shortly.");
+      window.open(buildFallbackUrl(itemId), "_blank", "noopener,noreferrer");
+      setError("");
     } finally {
       setLoading(false);
     }
