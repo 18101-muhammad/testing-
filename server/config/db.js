@@ -1,12 +1,8 @@
 const Database = require("better-sqlite3");
-const fs = require("fs");
-const path = require("path");
 require("dotenv").config();
+const { dbPath } = require("./storagePaths");
 
-const resolvedDbPath = path.resolve(process.cwd(), process.env.DB_PATH || "./db/antiqueshop.db");
-fs.mkdirSync(path.dirname(resolvedDbPath), { recursive: true });
-
-const db = new Database(resolvedDbPath, { verbose: console.log });
+const db = new Database(dbPath, { verbose: console.log });
 
 db.pragma("foreign_keys = ON");
 
@@ -59,6 +55,6 @@ if (!enquiryColumns.some((column) => column.name === "phone")) {
   db.exec("ALTER TABLE enquiries ADD COLUMN phone TEXT");
 }
 
-console.log("SQLite database ready at", process.env.DB_PATH);
+console.log("SQLite database ready at", dbPath);
 
 module.exports = db;

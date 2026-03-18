@@ -3,9 +3,9 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const path = require("path");
 
 require("./config/db");
+const { uploadsDir } = require("./config/storagePaths");
 
 const authMiddleware = require("./middleware/auth");
 const app = express();
@@ -19,7 +19,7 @@ app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(uploadsDir));
 
 app.use("/api/items", require("./routes/items"));
 app.use("/api/categories", require("./routes/categories"));
