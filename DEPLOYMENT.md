@@ -1,6 +1,7 @@
 # EC2 Auto Deploy
 
 This repository now includes a GitHub Actions workflow that deploys the app to one EC2 machine on every push to `main`.
+Each successful push to `main` also restarts the Node API with PM2 and restarts Nginx on EC2.
 
 ## Do Not Do This
 
@@ -88,7 +89,7 @@ After the secrets are created and the EC2 setup is done:
 
 1. Push this repository to GitHub.
 2. Push a commit to `main`.
-3. GitHub Actions will deploy the current code to EC2.
+3. GitHub Actions will deploy the current code to EC2, restart the PM2 API service, and restart Nginx.
 
 ## Notes
 

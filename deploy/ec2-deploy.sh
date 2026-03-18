@@ -77,13 +77,15 @@ else
 fi
 pm2 save
 popd > /dev/null
+echo "PM2 service is running with app name: ${PM2_APP_NAME}"
 
 if command -v systemctl > /dev/null 2>&1; then
   sudo systemctl enable nginx
   sudo systemctl restart nginx
+  echo "Nginx service restarted on EC2"
 fi
 
 find "${RELEASES_DIR}" -mindepth 1 -maxdepth 1 -type d | sort | head -n -3 | xargs -r rm -rf
 rm -f "${ARCHIVE_PATH}"
 
-echo "Deployment finished. Current release: ${RELEASE_DIR}"
+echo "Deployment finished. GitHub push deployed to EC2 and restarted PM2/Nginx. Current release: ${RELEASE_DIR}"
