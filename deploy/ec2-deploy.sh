@@ -15,6 +15,7 @@ RELEASE_DIR="${RELEASES_DIR}/${TIMESTAMP}"
 SERVER_ENV_FILE="${SERVER_ENV_FILE:-${SHARED_DIR}/server.env}"
 CLIENT_ENV_FILE="${CLIENT_ENV_FILE:-${SHARED_DIR}/client.env.production}"
 NGINX_ROOT="${NGINX_ROOT:-/usr/share/nginx/html}"
+NGINX_CONF_PATH="${NGINX_CONF_PATH:-/etc/nginx/conf.d/antique-shop.conf}"
 PM2_APP_NAME="${PM2_APP_NAME:-${APP_NAME}-api}"
 
 mkdir -p "${SHARED_DIR}" "${RELEASES_DIR}"
@@ -59,6 +60,7 @@ popd > /dev/null
 sudo mkdir -p "${NGINX_ROOT}"
 sudo find "${NGINX_ROOT}" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 sudo cp -R "${RELEASE_DIR}/client/build/." "${NGINX_ROOT}/"
+sudo cp "${RELEASE_DIR}/deploy/nginx-antique-shop.conf" "${NGINX_CONF_PATH}"
 
 if ! command -v pm2 > /dev/null 2>&1; then
   sudo npm install -g pm2
@@ -82,6 +84,7 @@ echo "PM2 service is running with app name: ${PM2_APP_NAME}"
 
 if command -v systemctl > /dev/null 2>&1; then
   sudo systemctl enable nginx
+  sudo nginx -t
   sudo systemctl restart nginx
   echo "Nginx service restarted on EC2"
 fi
