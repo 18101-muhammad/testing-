@@ -5,11 +5,7 @@ const { categories, items, sampleEnquiries, defaultAdmin } = require("../data/de
 
 const bootstrap = async () => {
   const itemCount = db.prepare("SELECT COUNT(*) AS count FROM items").get().count;
-
-  if (itemCount > 0) {
-    console.log(`Bootstrap skipped: ${itemCount} items already exist.`);
-    return;
-  }
+  const enquiryCount = db.prepare("SELECT COUNT(*) AS count FROM enquiries").get().count;
 
   const insertCategory = db.prepare("INSERT INTO categories (name, slug) VALUES (?, ?)");
   const insertItem = db.prepare(`
@@ -33,32 +29,39 @@ const bootstrap = async () => {
     }
 
     const result = insertCategory.run(category.name, category.slug);
-    categoryIdBySlug[category.slug] = result.lastInsertRowid;
+      categoryIdBySlug[category.slug] = result.lastInsertRowid;
   });
 
-  items.forEach(([title, description, price, categorySlug, era, condition, featured, sold]) => {
-    insertItem.run(
-      title,
-      description,
-      price,
-      categoryIdBySlug[categorySlug],
-      era,
-      condition,
-      JSON.stringify(["/uploads/placeholder.jpg"]),
-      featured,
-      sold
-    );
-  });
+  if (itemCount === 0) {
+    items.forEach(([title, description, price, categorySlug, era, condition, featured, sold]) => {
+      insertItem.run(
+        title,
+        description,
+        price,
+        categoryIdBySlug[categorySlug],
+        era,
+        condition,
+        JSON.stringify(["/uploads/placeholder.jpg"]),
+        featured,
+        sold
+      );
+    });
+  } else {
+    console.log(`Bootstrap skipped sample items: ${itemCount} items already exist.`);
+  }
 
   const adminExists = db.prepare("SELECT id FROM admins WHERE email = ?").get(defaultAdmin.email);
   if (!adminExists) {
     const passwordHash = await bcrypt.hash(defaultAdmin.password, 10);
     insertAdmin.run(defaultAdmin.email, passwordHash);
+    console.log(`Default admin restored: ${defaultAdmin.email}`);
   }
 
-  sampleEnquiries.forEach(([name, email, phone, message, itemId, itemReference, read]) => {
-    insertEnquiry.run(name, email, phone, message, itemId, itemReference, read);
-  });
+  if (itemCount === 0 && enquiryCount === 0) {
+    sampleEnquiries.forEach(([name, email, phone, message, itemId, itemReference, read]) => {
+      insertEnquiry.run(name, email, phone, message, itemId, itemReference, read);
+    });
+  }
 
   console.log("Bootstrap complete: sample categories, items, enquiries, and admin created.");
   console.log(`Admin login: ${defaultAdmin.email} / ${defaultAdmin.password}`);
