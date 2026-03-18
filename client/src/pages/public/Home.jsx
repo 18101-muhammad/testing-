@@ -55,7 +55,7 @@ export default function Home() {
                 Timeless Pieces, Enduring Stories
               </h1>
               <p className="max-w-2xl text-lg leading-8 text-antique-cream/85 sm:text-xl">
-                Discover rare and beautiful antiques curated with care.
+                Discover rare and beautiful antiques and curios, curated with care.
               </p>
             </div>
             <div className="flex flex-col gap-4 sm:flex-row">
