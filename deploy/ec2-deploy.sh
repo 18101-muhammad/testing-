@@ -73,10 +73,9 @@ ln -sfn "${RELEASE_DIR}" "${CURRENT_LINK}"
 
 pushd "${CURRENT_LINK}/server" > /dev/null
 if pm2 describe "${PM2_APP_NAME}" > /dev/null 2>&1; then
-  pm2 restart "${PM2_APP_NAME}" --update-env
-else
-  pm2 start server.js --name "${PM2_APP_NAME}"
+  pm2 delete "${PM2_APP_NAME}"
 fi
+pm2 start server.js --name "${PM2_APP_NAME}" --update-env
 pm2 save
 popd > /dev/null
 echo "PM2 service is running with app name: ${PM2_APP_NAME}"
