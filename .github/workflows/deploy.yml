@@ -1,0 +1,58 @@
+name: Deploy To EC2
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Create release archive
+        run: |
+          tar \
+            --exclude=.git \
+            --exclude=client/node_modules \
+            --exclude=client/build \
+            --exclude=client/devserver.log \
+            --exclude=client/devserver.err.log \
+            --exclude=server/node_modules \
+            --exclude=server/db \
+            --exclude=server/uploads \
+            --exclude=server/server.log \
+            --exclude=server/server.err.log \
+            --exclude=server/.env \
+            -czf release.tar.gz .
+
+      - name: Copy release files to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT || '22' }}
+          source: "release.tar.gz,deploy/ec2-deploy.sh"
+          target: "/home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}"
+
+      - name: Run remote deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT || '22' }}
+          script_stop: true
+          script: |
+            chmod +x /home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}/deploy/ec2-deploy.sh
+            APP_NAME="antique-shop" \
+            APP_SLUG="${{ secrets.DEPLOY_APP_SLUG || 'antique-shop' }}" \
+            DEPLOY_USER="${{ secrets.EC2_USERNAME }}" \
+            DEPLOY_ROOT="${{ secrets.DEPLOY_ROOT || format('/home/{0}/apps/antique-shop', secrets.EC2_USERNAME) }}" \
+            /home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}/deploy/ec2-deploy.sh \
+            /home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}/release.tar.gz

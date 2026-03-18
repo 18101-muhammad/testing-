@@ -9,3 +9,5 @@ server/uploads/*
 server/server.log
 server/server.err.log
 server/.env
+*.pem
+*.key
