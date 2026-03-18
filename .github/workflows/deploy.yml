@@ -6,6 +6,11 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  APP_NAME: antique-shop
+  APP_SLUG: antique-shop
+  DEPLOY_ROOT: /home/ec2-user/apps/antique-shop
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -36,7 +41,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          port: ${{ secrets.EC2_PORT || '22' }}
+          port: ${{ secrets.EC2_PORT }}
           source: "release.tar.gz,deploy/ec2-deploy.sh"
           target: "/home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}"
 
@@ -46,13 +51,13 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          port: ${{ secrets.EC2_PORT || '22' }}
+          port: ${{ secrets.EC2_PORT }}
           script_stop: true
           script: |
             chmod +x /home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}/deploy/ec2-deploy.sh
-            APP_NAME="antique-shop" \
-            APP_SLUG="${{ secrets.DEPLOY_APP_SLUG || 'antique-shop' }}" \
+            APP_NAME="${{ env.APP_NAME }}" \
+            APP_SLUG="${{ env.APP_SLUG }}" \
             DEPLOY_USER="${{ secrets.EC2_USERNAME }}" \
-            DEPLOY_ROOT="${{ secrets.DEPLOY_ROOT || format('/home/{0}/apps/antique-shop', secrets.EC2_USERNAME) }}" \
+            DEPLOY_ROOT="${{ env.DEPLOY_ROOT }}" \
             /home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}/deploy/ec2-deploy.sh \
             /home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}/release.tar.gz
