@@ -1,55 +1,70 @@
-import { useState } from "react";
-import { getWhatsAppLink } from "../api/api";
-
 const DEFAULT_WHATSAPP_NUMBER = "353868369203";
 
-const createWhatsAppUrl = (phone, message) =>
-  `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+const normalizeWhatsAppNumber = (value) => String(value || "").replace(/\D/g, "") || DEFAULT_WHATSAPP_NUMBER;
 
-const buildFallbackUrl = (itemId) => {
-  const message = itemId
-    ? "Hi, I would like to know more about this item."
-    : "Hi, I'd like to know more about your antique shop.";
+const createWhatsAppUrl = (phone, message, useAppScheme) => {
+  const normalizedPhone = normalizeWhatsAppNumber(phone);
+  const encodedMessage = encodeURIComponent(message);
 
-  return createWhatsAppUrl(DEFAULT_WHATSAPP_NUMBER, message);
+  if (useAppScheme) {
+    return `whatsapp://send?phone=${normalizedPhone}&text=${encodedMessage}`;
+  }
+
+  return `https://api.whatsapp.com/send?phone=${normalizedPhone}&text=${encodedMessage}`;
 };
 
-export default function WhatsAppButton({ itemId, label = "Enquire via WhatsApp", className = "" }) {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+const buildMessage = (itemTitle, itemPrice) => {
+  if (itemTitle) {
+    return itemPrice
+      ? `I am interested in ${itemTitle} priced at ${itemPrice}`
+      : `I am interested in ${itemTitle}. Could you share more details?`;
+  }
 
-  const handleClick = async () => {
-    try {
-      setLoading(true);
-      setError("");
-      const result = await getWhatsAppLink(itemId);
-      const url = result?.url || result?.link;
+  return "Hi, I'd like to know more about your antique shop.";
+};
 
-      if (!url) {
-        throw new Error("WhatsApp link is unavailable.");
-      }
+const isMobileDevice = () => {
+  if (typeof navigator === "undefined") {
+    return false;
+  }
 
-      window.location.assign(url);
-    } catch {
-      window.location.assign(buildFallbackUrl(itemId));
-      setError("");
-    } finally {
-      setLoading(false);
+  return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+};
+
+export default function WhatsAppButton({
+  itemTitle,
+  itemPrice,
+  label = "Enquire via WhatsApp",
+  className = "",
+  phoneNumber = DEFAULT_WHATSAPP_NUMBER,
+}) {
+  const message = buildMessage(itemTitle, itemPrice);
+  const mobile = isMobileDevice();
+  const href = createWhatsAppUrl(phoneNumber, message, mobile);
+  const fallbackHref = createWhatsAppUrl(phoneNumber, message, false);
+
+  const handleClick = () => {
+    if (!mobile) {
+      return;
     }
+
+    window.setTimeout(() => {
+      if (document.visibilityState === "visible") {
+        window.location.replace(fallbackHref);
+      }
+    }, 600);
   };
 
   return (
     <div className="space-y-2">
-      <button
+      <a
         className={`inline-flex items-center justify-center gap-3 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white hover:brightness-95 ${className}`}
-        disabled={loading}
+        href={href}
         onClick={handleClick}
-        type="button"
       >
-        <span className="text-lg">◔</span>
-        {loading ? "Opening WhatsApp..." : label}
-      </button>
-      {error ? <p className="text-sm text-red-600">{error}</p> : null}
+        <span className="text-lg">â—”</span>
+        {label}
+      </a>
     </div>
   );
 }

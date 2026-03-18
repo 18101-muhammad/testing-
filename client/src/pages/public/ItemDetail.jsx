@@ -158,7 +158,7 @@ export default function ItemDetail() {
 
             <div className="space-y-4 rounded-[28px] border border-antique-gold/15 bg-white p-6 shadow-soft">
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <WhatsAppButton className="w-full sm:w-auto" itemId={itemId} />
+                <WhatsAppButton className="w-full sm:w-auto" itemPrice={formattedPrice} itemTitle={item.title} />
                 <button
                   className="btn-primary w-full justify-center sm:w-auto"
                   onClick={() => {
