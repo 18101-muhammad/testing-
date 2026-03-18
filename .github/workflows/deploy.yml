@@ -21,19 +21,7 @@ jobs:
 
       - name: Create release archive
         run: |
-          tar \
-            --exclude=.git \
-            --exclude=client/node_modules \
-            --exclude=client/build \
-            --exclude=client/devserver.log \
-            --exclude=client/devserver.err.log \
-            --exclude=server/node_modules \
-            --exclude=server/db \
-            --exclude=server/uploads \
-            --exclude=server/server.log \
-            --exclude=server/server.err.log \
-            --exclude=server/.env \
-            -czf release.tar.gz .
+          git archive --format=tar.gz --output=release.tar.gz HEAD
 
       - name: Copy release files to EC2
         uses: appleboy/scp-action@v0.1.7
