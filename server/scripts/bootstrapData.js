@@ -1,16 +1,15 @@
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
-const db = require("./config/db");
-const { categories, items, sampleEnquiries, defaultAdmin } = require("./data/defaultData");
+const db = require("../config/db");
+const { categories, items, sampleEnquiries, defaultAdmin } = require("../data/defaultData");
 
-const seed = async () => {
-  db.exec(`
-    DELETE FROM enquiries;
-    DELETE FROM items;
-    DELETE FROM categories;
-    DELETE FROM admins;
-    DELETE FROM sqlite_sequence WHERE name IN ('items','categories','enquiries','admins');
-  `);
+const bootstrap = async () => {
+  const itemCount = db.prepare("SELECT COUNT(*) AS count FROM items").get().count;
+
+  if (itemCount > 0) {
+    console.log(`Bootstrap skipped: ${itemCount} items already exist.`);
+    return;
+  }
 
   const insertCategory = db.prepare("INSERT INTO categories (name, slug) VALUES (?, ?)");
   const insertItem = db.prepare(`
@@ -24,7 +23,15 @@ const seed = async () => {
   `);
 
   const categoryIdBySlug = {};
+
   categories.forEach((category) => {
+    const existing = db.prepare("SELECT id FROM categories WHERE slug = ?").get(category.slug);
+
+    if (existing) {
+      categoryIdBySlug[category.slug] = existing.id;
+      return;
+    }
+
     const result = insertCategory.run(category.name, category.slug);
     categoryIdBySlug[category.slug] = result.lastInsertRowid;
   });
@@ -43,20 +50,21 @@ const seed = async () => {
     );
   });
 
-  const passwordHash = await bcrypt.hash(defaultAdmin.password, 10);
-  insertAdmin.run(defaultAdmin.email, passwordHash);
+  const adminExists = db.prepare("SELECT id FROM admins WHERE email = ?").get(defaultAdmin.email);
+  if (!adminExists) {
+    const passwordHash = await bcrypt.hash(defaultAdmin.password, 10);
+    insertAdmin.run(defaultAdmin.email, passwordHash);
+  }
 
   sampleEnquiries.forEach(([name, email, phone, message, itemId, itemReference, read]) => {
     insertEnquiry.run(name, email, phone, message, itemId, itemReference, read);
   });
 
-  console.log("✓ Database seeded!");
-  console.log("Items: 12 | Categories: 6");
+  console.log("Bootstrap complete: sample categories, items, enquiries, and admin created.");
   console.log(`Admin login: ${defaultAdmin.email} / ${defaultAdmin.password}`);
-  process.exit(0);
 };
 
-seed().catch((error) => {
+bootstrap().catch((error) => {
   console.error(error);
   process.exit(1);
 });
