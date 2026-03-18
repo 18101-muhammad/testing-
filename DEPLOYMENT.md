@@ -13,7 +13,7 @@ Use a GitHub secret instead.
 
 - GitHub Actions builds a release archive from the repo.
 - GitHub uploads the archive and the deploy script to EC2 over SSH.
-- EC2 installs dependencies, builds the React app, updates Nginx static files, and restarts the Node API with PM2.
+- EC2 removes any existing release `node_modules`, installs dependencies from lockfiles, builds the React app, updates Nginx static files, and restarts the Node API with PM2.
 - SQLite and uploaded files stay on the EC2 machine in a shared data directory.
 
 ## GitHub Secrets

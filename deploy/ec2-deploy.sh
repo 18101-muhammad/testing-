@@ -37,6 +37,7 @@ if [[ -f "${CLIENT_ENV_FILE}" ]]; then
 fi
 
 pushd "${RELEASE_DIR}/server" > /dev/null
+rm -rf node_modules
 if [[ -f package-lock.json ]]; then
   npm ci --omit=dev
 else
@@ -46,6 +47,7 @@ npm run bootstrap
 popd > /dev/null
 
 pushd "${RELEASE_DIR}/client" > /dev/null
+rm -rf node_modules
 if [[ -f package-lock.json ]]; then
   npm ci
 else
