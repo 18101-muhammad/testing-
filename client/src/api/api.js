@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "/api";
 const MEDIA_BASE_URL = process.env.REACT_APP_MEDIA_BASE_URL || "http://localhost:5000";
+const CURRENT_ORIGIN = typeof window !== "undefined" ? window.location.origin : "";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -38,7 +39,22 @@ export const buildImageUrl = (path) => {
     return "https://placehold.co/900x700/f0e6cc/1a2744?text=The+Antique+Room";
   }
 
+  if (CURRENT_ORIGIN && /^\/uploads\//i.test(path)) {
+    return `${CURRENT_ORIGIN}${path}`;
+  }
+
   if (/^https?:\/\//i.test(path)) {
+    if (CURRENT_ORIGIN) {
+      try {
+        const imageUrl = new URL(path);
+        if (/^\/uploads\//i.test(imageUrl.pathname)) {
+          return `${CURRENT_ORIGIN}${imageUrl.pathname}`;
+        }
+      } catch (_error) {
+        return path;
+      }
+    }
+
     return path;
   }
 
