@@ -93,7 +93,7 @@ export default function Contact() {
                   <span className="font-semibold text-antique-navy">Opening Hours:</span> Monday to Saturday, 10:00 - 18:00
                 </p>
                 <p>
-                  <span className="font-semibold text-antique-navy">Location:</span> Georgian Quarter, Dublin
+                  <span className="font-semibold text-antique-navy">Location:</span> Maynooth, Ireland
                 </p>
                 <p>Private viewings and sourcing appointments are available by request.</p>
               </div>
