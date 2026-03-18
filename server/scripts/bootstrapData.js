@@ -13,6 +13,7 @@ const bootstrap = async () => {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
   const insertAdmin = db.prepare("INSERT INTO admins (email, password_hash) VALUES (?, ?)");
+  const updateAdminPassword = db.prepare("UPDATE admins SET password_hash = ? WHERE email = ?");
   const insertEnquiry = db.prepare(`
     INSERT INTO enquiries (name, email, phone, message, item_id, item_reference, read)
     VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -51,10 +52,13 @@ const bootstrap = async () => {
   }
 
   const adminExists = db.prepare("SELECT id FROM admins WHERE email = ?").get(defaultAdmin.email);
+  const passwordHash = await bcrypt.hash(defaultAdmin.password, 10);
   if (!adminExists) {
-    const passwordHash = await bcrypt.hash(defaultAdmin.password, 10);
     insertAdmin.run(defaultAdmin.email, passwordHash);
     console.log(`Default admin restored: ${defaultAdmin.email}`);
+  } else {
+    updateAdminPassword.run(passwordHash, defaultAdmin.email);
+    console.log(`Default admin password synced: ${defaultAdmin.email}`);
   }
 
   if (itemCount === 0 && enquiryCount === 0) {
