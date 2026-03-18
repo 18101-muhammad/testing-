@@ -189,7 +189,7 @@ router.put("/:id", upload, (req, res) => {
 
 router.delete("/:id", (req, res) => {
   try {
-    const existing = db.prepare("SELECT images FROM items WHERE id = ?").get(req.params.id);
+    const existing = db.prepare("SELECT id, title, images FROM items WHERE id = ?").get(req.params.id);
 
     if (!existing) {
       res.status(404).json({ error: "Item not found" });
@@ -201,6 +201,14 @@ router.delete("/:id", (req, res) => {
         deleteFile(imagePath);
       }
     });
+
+    db.prepare(
+      `
+        UPDATE enquiries
+        SET item_reference = COALESCE(item_reference, ?), item_id = NULL
+        WHERE item_id = ?
+      `
+    ).run(existing.title, req.params.id);
 
     db.prepare("DELETE FROM items WHERE id = ?").run(req.params.id);
     res.json({ success: true });
