@@ -16,11 +16,7 @@ export default function Home() {
     const fetchHomeData = async () => {
       try {
         setLoading(true);
-        const [featuredResponse, categoriesResponse] = await Promise.all([
-          getItems({ featured: true }),
-          getCategories(),
-        ]);
-
+        const [featuredResponse, categoriesResponse] = await Promise.all([getItems({ featured: true }), getCategories()]);
         setFeaturedItems(featuredResponse?.items || featuredResponse || []);
         setCategories(categoriesResponse?.categories || categoriesResponse || []);
       } catch {
@@ -43,28 +39,53 @@ export default function Home() {
         />
       </Helmet>
 
-      <section className="hero-grid relative isolate overflow-hidden bg-antique-navy text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(201,168,76,0.22),_transparent_42%)]" />
-        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-          <div className="max-w-3xl animate-fade-in space-y-8">
-            <span className="inline-flex rounded-full border border-antique-gold/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-antique-gold">
-              Curated Fine Antiques
-            </span>
-            <div className="space-y-4">
-              <h1 className="font-display text-5xl leading-tight sm:text-6xl lg:text-7xl">
-                Timeless Pieces, Enduring Stories
+      <section className="hero-grid relative isolate overflow-hidden text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(182,138,60,0.24),transparent_24%)]" />
+        <div className="relative mx-auto grid max-w-7xl gap-12 px-4 pb-20 pt-24 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-8 lg:pb-28 lg:pt-28">
+          <div className="animate-fade-in space-y-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.38em] text-[#d6b57d]">Collected Interiors • Ireland</p>
+            <div className="space-y-5">
+              <h1 className="max-w-4xl font-display text-5xl leading-[0.98] sm:text-6xl lg:text-8xl">
+                Rooms remember more when every object has a past.
               </h1>
-              <p className="max-w-2xl text-lg leading-8 text-antique-cream/85 sm:text-xl">
-                Discover rare and beautiful antiques and curios, curated with care.
+              <p className="max-w-2xl text-lg leading-8 text-[#efe6d5]/80 sm:text-xl">
+                Never The Twain brings together antiques, curios, and quietly striking furnishings selected for homes that prefer atmosphere over excess.
               </p>
             </div>
+
             <div className="flex flex-col gap-4 sm:flex-row">
               <Link className="btn-primary" to="/shop">
-                Browse Collection
+                View Collection
               </Link>
-              <Link className="btn-secondary border-white/20 text-white hover:bg-white/10 hover:text-white" to="/contact">
-                Contact Us
+              <Link className="btn-secondary border-white/15 bg-white/5 text-white hover:bg-white/10 hover:text-white" to="/contact">
+                Book A Viewing
               </Link>
+            </div>
+
+            <div className="grid max-w-2xl gap-4 sm:grid-cols-3">
+              {[
+                { label: "Collected pieces", value: `${featuredItems.length || 0}+` },
+                { label: "Curated categories", value: `${categories.length || 0}` },
+                { label: "Private appointments", value: "By request" },
+              ].map((stat) => (
+                <div className="rounded-[28px] border border-white/10 bg-white/5 px-5 py-5 backdrop-blur-sm" key={stat.label}>
+                  <p className="font-display text-3xl text-[#f7f1e3]">{stat.value}</p>
+                  <p className="mt-2 text-xs uppercase tracking-[0.26em] text-[#d7ccb8]/72">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-4 self-end">
+            <div className="editorial-card rounded-[34px] bg-[#f2ebdf]/88 p-6 text-[#20251d]">
+              <p className="eyebrow">Approach</p>
+              <p className="mt-4 text-lg leading-8 text-[#4f574a]">
+                A slower collection of furniture and decorative objects chosen for line, mood, wear, and the kind of presence that improves with age.
+              </p>
+            </div>
+            <div className="editorial-card rounded-[34px] bg-[#2a3027]/84 p-6 text-[#f1e8d9]">
+              <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">For interiors with restraint</p>
+              <p className="mt-4 font-display text-3xl leading-tight">Decorative pieces that feel inherited rather than merely bought.</p>
             </div>
           </div>
         </div>
@@ -74,8 +95,11 @@ export default function Home() {
         <div className="section-heading">
           <div>
             <p className="eyebrow">Featured Collection</p>
-            <h2 className="section-title">Featured Pieces</h2>
+            <h2 className="section-title">A considered selection of standout pieces</h2>
           </div>
+          <p className="max-w-md text-sm leading-7 text-[#5e5a50]">
+            Larger furniture, sculptural decorative objects, and collector-led finds intended to anchor a room rather than simply fill it.
+          </p>
         </div>
 
         {loading ? <LoadingSpinner label="Loading featured pieces..." /> : null}
@@ -90,12 +114,12 @@ export default function Home() {
         ) : null}
       </section>
 
-      <section className="bg-white">
+      <section className="bg-[#ece4d5]/70">
         <div className="section-shell">
           <div className="section-heading">
             <div>
               <p className="eyebrow">Browse By Category</p>
-              <h2 className="section-title">Elegant Finds For Every Interior</h2>
+              <h2 className="section-title">Collected by material, mood, and use</h2>
             </div>
           </div>
 
@@ -103,20 +127,23 @@ export default function Home() {
 
           {!loading ? (
             <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-              {categories.map((category) => {
+              {categories.map((category, index) => {
                 const slug = category.slug || category.name?.toLowerCase().replace(/\s+/g, "-");
                 return (
                   <button
-                    className="group rounded-[28px] border border-antique-gold/20 bg-antique-light-gold px-6 py-10 text-left hover:-translate-y-1 hover:bg-antique-navy hover:text-white"
+                    className={`rounded-[30px] border px-6 py-10 text-left shadow-soft hover:-translate-y-1 ${
+                      index % 3 === 0
+                        ? "border-[#2f382d]/10 bg-[#232820] text-[#efe6d5]"
+                        : "border-[#2f382d]/10 bg-white/80 text-[#253022]"
+                    }`}
                     key={category._id || category.id || slug}
                     onClick={() => navigate(`/shop?category=${encodeURIComponent(slug)}`)}
                     type="button"
                   >
-                    <p className="font-display text-3xl text-antique-navy group-hover:text-antique-gold">
-                      {category.name}
-                    </p>
-                    <p className="mt-3 text-sm leading-7 text-antique-muted group-hover:text-white/80">
-                      Explore handcrafted objects and timeless decorative pieces within this collection.
+                    <p className={`text-xs font-semibold uppercase tracking-[0.32em] ${index % 3 === 0 ? "text-[#d8b579]" : "text-[#b68a3c]"}`}>Category</p>
+                    <p className={`mt-5 font-display text-3xl leading-tight ${index % 3 === 0 ? "text-[#f7efe0]" : "text-[#263024]"}`}>{category.name}</p>
+                    <p className={`mt-4 text-sm leading-7 ${index % 3 === 0 ? "text-[#efe6d5]/74" : "text-[#636055]"}`}>
+                      Explore pieces that share a common material language, decorative rhythm, or historical atmosphere.
                     </p>
                   </button>
                 );

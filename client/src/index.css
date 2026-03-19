@@ -3,20 +3,35 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --ntt-ink: #1a1b18;
+    --ntt-olive: #31382c;
+    --ntt-paper: #f3eee3;
+    --ntt-line: rgba(49, 56, 44, 0.14);
+    --ntt-gold: #b68a3c;
+  }
+
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-antique-cream font-body text-antique-dark antialiased;
+    @apply font-body antialiased;
+    background-color: var(--ntt-paper);
     background-image:
-      radial-gradient(circle at top, rgba(201, 168, 76, 0.08), transparent 28%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.72));
+      radial-gradient(circle at top left, rgba(182, 138, 60, 0.16), transparent 26%),
+      radial-gradient(circle at top right, rgba(49, 56, 44, 0.08), transparent 24%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(243, 238, 227, 0.92));
+    color: var(--ntt-ink);
     margin: 0;
   }
 
   * {
     @apply transition duration-200;
+  }
+
+  img {
+    display: block;
   }
 }
 
@@ -30,23 +45,47 @@
   }
 
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.32em] text-antique-gold;
+    color: var(--ntt-gold);
+    @apply text-xs font-semibold uppercase tracking-[0.34em];
   }
 
   .section-title {
-    @apply mt-3 font-display text-4xl text-antique-navy sm:text-5xl;
+    color: var(--ntt-olive);
+    @apply mt-3 font-display text-4xl leading-tight sm:text-5xl;
   }
 
   .btn-primary {
-    @apply inline-flex items-center rounded-full bg-antique-gold px-6 py-3 font-semibold text-antique-navy shadow-soft hover:bg-[#b89435];
+    background-color: var(--ntt-olive);
+    color: #f7f2e7;
+    @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold shadow-soft;
+  }
+
+  .btn-primary:hover {
+    background-color: #20261d;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center rounded-full border border-antique-gold/35 px-6 py-3 font-semibold text-antique-navy hover:border-antique-gold hover:bg-antique-light-gold;
+    border: 1px solid rgba(49, 56, 44, 0.16);
+    color: var(--ntt-olive);
+    background-color: rgba(255, 255, 255, 0.45);
+    @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold backdrop-blur-sm;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(49, 56, 44, 0.28);
+    background-color: rgba(255, 255, 255, 0.8);
   }
 
   .form-input {
-    @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-antique-dark outline-none ring-0 placeholder:text-slate-400 focus:border-antique-gold;
+    border: 1px solid rgba(49, 56, 44, 0.14);
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--ntt-ink);
+    @apply w-full rounded-[22px] px-4 py-3 outline-none ring-0 placeholder:text-slate-400;
+  }
+
+  .form-input:focus {
+    border-color: rgba(182, 138, 60, 0.65);
+    box-shadow: 0 0 0 4px rgba(182, 138, 60, 0.08);
   }
 
   .admin-input {
@@ -66,17 +105,21 @@
   }
 
   .hero-grid {
-    background-image:
-      linear-gradient(125deg, rgba(17, 27, 49, 0.96), rgba(26, 39, 68, 0.92)),
-      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: auto, 36px 36px, 36px 36px;
+    background:
+      linear-gradient(135deg, rgba(20, 22, 19, 0.94), rgba(36, 42, 34, 0.9)),
+      radial-gradient(circle at top left, rgba(182, 138, 60, 0.18), transparent 28%);
+  }
+
+  .editorial-card {
+    border: 1px solid var(--ntt-line);
+    background: rgba(255, 255, 255, 0.72);
+    @apply rounded-[30px] backdrop-blur-sm;
   }
 }
 
 @layer utilities {
   .shadow-soft {
-    box-shadow: 0 18px 50px rgba(17, 27, 49, 0.08);
+    box-shadow: 0 22px 60px rgba(26, 27, 24, 0.08);
   }
 
   .animate-fade-in {

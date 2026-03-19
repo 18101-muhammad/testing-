@@ -2,38 +2,47 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="bg-antique-navy text-antique-cream">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-8">
-        <div className="space-y-4">
-          <h2 className="font-display text-3xl text-antique-gold">Never The Twain</h2>
-          <p className="max-w-xl text-sm leading-7 text-antique-cream/80">
-            Rare furniture, decorative treasures, and storied objects chosen for collectors who value craftsmanship and provenance.
-          </p>
-          <p className="text-sm uppercase tracking-[0.28em] text-antique-gold/80">
-            Est. 2024 - Passionate about preserving history
+    <footer className="mt-16 bg-[#171914] text-[#efe6d5]">
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-8">
+        <div className="space-y-5">
+          <p className="text-xs font-semibold uppercase tracking-[0.36em] text-[#b68a3c]">Private Collection House</p>
+          <h2 className="font-display text-4xl text-[#f3ecdf]">Never The Twain</h2>
+          <p className="max-w-2xl text-sm leading-8 text-[#efe6d5]/72">
+            An online collection of decorative antiques, singular furniture, and quietly dramatic objects chosen for rooms that value memory, patina, and restraint.
           </p>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-antique-gold">Explore</h3>
-          <div className="flex flex-col gap-3 text-sm">
-            <Link className="hover:text-antique-gold" to="/">
-              Home
-            </Link>
-            <Link className="hover:text-antique-gold" to="/shop">
-              Shop
-            </Link>
-            <Link className="hover:text-antique-gold" to="/contact">
-              Contact
-            </Link>
+        <div className="grid gap-10 sm:grid-cols-2">
+          <div className="space-y-4">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-[#b68a3c]">Explore</h3>
+            <div className="flex flex-col gap-3 text-sm text-[#efe6d5]/78">
+              <Link className="hover:text-white" to="/">
+                Home
+              </Link>
+              <Link className="hover:text-white" to="/shop">
+                Collection
+              </Link>
+              <Link className="hover:text-white" to="/contact">
+                Contact
+              </Link>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-[#b68a3c]">Visit</h3>
+            <div className="space-y-2 text-sm text-[#efe6d5]/78">
+              <p>Maynooth, Ireland</p>
+              <p>Private viewings by appointment</p>
+              <p>Monday to Saturday, 10:00 - 18:00</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl justify-between px-4 py-4 text-xs text-antique-cream/70 sm:px-6 lg:px-8">
-          <span>All rights reserved.</span>
+      <div className="border-t border-white/8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4 text-xs uppercase tracking-[0.24em] text-[#efe6d5]/50 sm:flex-row sm:justify-between sm:px-6 lg:px-8">
           <span>Never The Twain</span>
+          <span>Collected with patience</span>
         </div>
       </div>
     </footer>

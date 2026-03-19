@@ -76,62 +76,76 @@ export default function Shop() {
         <title>Shop | Never The Twain</title>
       </Helmet>
 
-      <section className="section-shell">
+      <section className="section-shell pt-14">
         <div className="section-heading">
           <div>
             <p className="eyebrow">Browse The Collection</p>
-            <h1 className="section-title">Our Collection</h1>
+            <h1 className="section-title">Pieces chosen for tone, proportion, and provenance</h1>
           </div>
-          <p className="text-sm text-antique-muted">Showing {items.length} items</p>
+          <p className="max-w-md text-sm leading-7 text-[#615b4f]">Showing {items.length} pieces across furniture, decorative objects, and collector-led finds.</p>
         </div>
 
-        <form className="rounded-[32px] border border-antique-gold/20 bg-white p-6 shadow-soft" onSubmit={applyFilters}>
-          <div className="grid gap-4 lg:grid-cols-[2fr_1fr_1fr_1fr_auto]">
-            <input
-              className="form-input"
-              name="search"
-              onChange={handleChange}
-              placeholder="Search by title, era, or keyword"
-              value={filters.search}
-            />
-            <select className="form-input" name="category" onChange={handleChange} value={filters.category}>
-              <option value="">All categories</option>
-              {categories.map((category) => (
-                <option key={category._id || category.id} value={category.slug || category.name}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-            <input className="form-input" min="0" name="minPrice" onChange={handleChange} placeholder="Min price" type="number" value={filters.minPrice} />
-            <input className="form-input" min="0" name="maxPrice" onChange={handleChange} placeholder="Max price" type="number" value={filters.maxPrice} />
-            <div className="flex gap-3">
-              <button className="btn-primary flex-1 justify-center" type="submit">
-                Filter
-              </button>
-              <button className="btn-secondary flex-1 justify-center" onClick={clearFilters} type="button">
-                Clear
-              </button>
+        <div className="grid gap-8 xl:grid-cols-[300px_1fr]">
+          <form className="editorial-card h-fit rounded-[32px] p-6 shadow-soft" onSubmit={applyFilters}>
+            <div className="space-y-6">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#b68a3c]">Refine</p>
+                <p className="mt-3 text-sm leading-7 text-[#656053]">Filter by category, price, or a specific descriptive word.</p>
+              </div>
+
+              <input
+                className="form-input"
+                name="search"
+                onChange={handleChange}
+                placeholder="Search by title, era, or keyword"
+                value={filters.search}
+              />
+
+              <select className="form-input" name="category" onChange={handleChange} value={filters.category}>
+                <option value="">All categories</option>
+                {categories.map((category) => (
+                  <option key={category._id || category.id} value={category.slug || category.name}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
+                <input className="form-input" min="0" name="minPrice" onChange={handleChange} placeholder="Minimum price" type="number" value={filters.minPrice} />
+                <input className="form-input" min="0" name="maxPrice" onChange={handleChange} placeholder="Maximum price" type="number" value={filters.maxPrice} />
+              </div>
+
+              <div className="flex gap-3">
+                <button className="btn-primary flex-1" type="submit">
+                  Apply
+                </button>
+                <button className="btn-secondary flex-1" onClick={clearFilters} type="button">
+                  Clear
+                </button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
 
-        {loading ? <LoadingSpinner label="Loading collection..." /> : null}
-        {error ? <p className="rounded-3xl bg-red-50 p-6 text-red-700">{error}</p> : null}
+          <div className="space-y-8">
+            {loading ? <LoadingSpinner label="Loading collection..." /> : null}
+            {error ? <p className="rounded-3xl bg-red-50 p-6 text-red-700">{error}</p> : null}
 
-        {!loading && !error && !items.length ? (
-          <div className="rounded-[32px] border border-dashed border-antique-gold/40 bg-white p-10 text-center">
-            <h2 className="font-display text-3xl text-antique-navy">No items found</h2>
-            <p className="mt-3 text-antique-muted">Try broadening your filters or browse the full collection.</p>
-          </div>
-        ) : null}
+            {!loading && !error && !items.length ? (
+              <div className="editorial-card rounded-[32px] p-12 text-center shadow-soft">
+                <h2 className="font-display text-3xl text-[#263024]">No pieces match those filters</h2>
+                <p className="mt-3 text-[#656053]">Try broadening the criteria or return to the full collection.</p>
+              </div>
+            ) : null}
 
-        {!loading && !error && items.length ? (
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {items.map((item) => (
-              <ItemCard item={item} key={item._id || item.id} />
-            ))}
+            {!loading && !error && items.length ? (
+              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {items.map((item) => (
+                  <ItemCard item={item} key={item._id || item.id} />
+                ))}
+              </div>
+            ) : null}
           </div>
-        ) : null}
+        </div>
       </section>
     </>
   );

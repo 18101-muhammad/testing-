@@ -73,7 +73,7 @@ export default function ItemDetail() {
 
   const mainImage = buildImageUrl(selectedImage || gallery[0]);
   const itemId = item._id || item.id;
-  const formattedPrice = item.price != null ? `€${Number(item.price).toLocaleString()}` : "Price on request";
+  const formattedPrice = item.price != null ? `EUR ${Number(item.price).toLocaleString()}` : "Price on request";
   const enquireMessage = `I'm interested in ${item.title}. Could you share more details about availability and purchase options?`;
 
   const handleBuyNowChange = (event) => {
@@ -111,14 +111,14 @@ export default function ItemDetail() {
         <title>{item.title} | Never The Twain</title>
       </Helmet>
 
-      <section className="section-shell">
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+      <section className="section-shell pt-14">
+        <div className="grid gap-10 xl:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-4">
-            <div className="relative overflow-hidden rounded-[32px] bg-white shadow-soft">
-              <img alt={item.title} className="aspect-[4/3] w-full bg-antique-light-gold object-contain p-4" src={mainImage} />
+            <div className="editorial-card relative overflow-hidden rounded-[34px] shadow-soft">
+              <img alt={item.title} className="aspect-[4/3] w-full bg-[#e9dfcf] object-contain p-4" src={mainImage} />
               {item.sold ? (
-                <span className="absolute left-5 top-5 rounded-full bg-red-700 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">
-                  SOLD
+                <span className="absolute left-5 top-5 rounded-full bg-[#5c2f2b] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">
+                  Sold
                 </span>
               ) : null}
             </div>
@@ -127,12 +127,12 @@ export default function ItemDetail() {
               <div className="grid grid-cols-4 gap-3">
                 {gallery.map((image) => (
                   <button
-                    className={`overflow-hidden rounded-2xl border-2 ${selectedImage === image ? "border-antique-gold" : "border-transparent"}`}
+                    className={`overflow-hidden rounded-2xl border p-1 ${selectedImage === image ? "border-[#b68a3c] bg-[#f0e7d7]" : "border-[#2f382d]/10 bg-white/70"}`}
                     key={image}
                     onClick={() => setSelectedImage(image)}
                     type="button"
                   >
-                    <img alt={item.title} className="aspect-square w-full object-cover" src={buildImageUrl(image)} />
+                    <img alt={item.title} className="aspect-square w-full rounded-xl object-cover" src={buildImageUrl(image)} />
                   </button>
                 ))}
               </div>
@@ -140,27 +140,25 @@ export default function ItemDetail() {
           </div>
 
           <div className="space-y-6">
-            <div className="space-y-4">
+            <div className="editorial-card rounded-[34px] p-8 shadow-soft">
               <p className="eyebrow">Collection Detail</p>
-              <h1 className="font-display text-5xl text-antique-navy">{item.title}</h1>
-              <div className="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-antique-muted">
-                {item.era ? <span className="rounded-full bg-antique-light-gold px-3 py-1">{item.era}</span> : null}
-                {item.condition ? <span className="rounded-full bg-slate-100 px-3 py-1">{item.condition}</span> : null}
-                {item.category?.name || item.category ? (
-                  <span className="rounded-full bg-slate-100 px-3 py-1">{item.category?.name || item.category}</span>
-                ) : null}
+              <h1 className="mt-4 font-display text-5xl leading-tight text-[#263024]">{item.title}</h1>
+
+              <div className="mt-5 flex flex-wrap gap-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#6c6557]">
+                {item.era ? <span>{item.era}</span> : null}
+                {item.condition ? <span>{item.condition}</span> : null}
+                {item.category?.name || item.category ? <span>{item.category?.name || item.category}</span> : null}
               </div>
+
+              <p className="mt-8 font-display text-4xl text-[#b68a3c]">{formattedPrice}</p>
+              <p className="mt-6 text-base leading-8 text-[#5f584b]">{item.description}</p>
             </div>
 
-            <p className="text-4xl font-bold text-antique-gold">{formattedPrice}</p>
-
-            <p className="text-base leading-8 text-antique-muted">{item.description}</p>
-
-            <div className="space-y-4 rounded-[28px] border border-antique-gold/15 bg-white p-6 shadow-soft">
+            <div className="editorial-card rounded-[34px] p-6 shadow-soft">
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <WhatsAppButton className="w-full sm:w-auto" itemPrice={formattedPrice} itemTitle={item.title} />
                 <button
-                  className="btn-primary w-full justify-center sm:w-auto"
+                  className="btn-primary w-full sm:w-auto"
                   onClick={() => {
                     setBuyNowOpen(true);
                     setBuyNowError("");
@@ -171,32 +169,34 @@ export default function ItemDetail() {
                   Buy Now
                 </button>
                 <Link
-                  className="btn-secondary w-full justify-center sm:w-auto"
+                  className="btn-secondary w-full sm:w-auto"
                   to={`/contact?itemReference=${encodeURIComponent(item.title)}&message=${encodeURIComponent(enquireMessage)}`}
                 >
                   Enquire
                 </Link>
               </div>
-              <ShareButtons imageUrl={mainImage} title={item.title} />
+              <div className="mt-5 border-t border-[#2f382d]/10 pt-5">
+                <ShareButtons imageUrl={mainImage} title={item.title} />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {buyNowOpen ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/55 px-4 py-6">
-          <div className="w-full max-w-lg rounded-[32px] bg-white p-8 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 px-4 py-6">
+          <div className="w-full max-w-lg rounded-[32px] bg-[#f8f3e9] p-8 shadow-2xl">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="eyebrow">Purchase Request</p>
-                <h2 className="mt-3 font-display text-4xl text-antique-navy">Buy Now</h2>
-                <p className="mt-3 text-sm leading-7 text-antique-muted">
-                  Submit your details and we will follow up about purchasing <span className="font-semibold text-antique-navy">{item.title}</span>.
+                <h2 className="mt-3 font-display text-4xl text-[#263024]">Buy Now</h2>
+                <p className="mt-3 text-sm leading-7 text-[#625d52]">
+                  Submit your details and we will follow up about purchasing <span className="font-semibold text-[#263024]">{item.title}</span>.
                 </p>
               </div>
               <button
                 aria-label="Close buy now form"
-                className="rounded-full border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100"
+                className="rounded-full border border-[#2f382d]/10 px-3 py-2 text-sm font-semibold text-[#596355] hover:bg-white/70"
                 onClick={() => setBuyNowOpen(false)}
                 type="button"
               >
@@ -204,57 +204,25 @@ export default function ItemDetail() {
               </button>
             </div>
 
-            <div className="mt-6 rounded-2xl bg-antique-light-gold/60 p-4 text-sm text-antique-dark">
+            <div className="mt-6 rounded-2xl bg-[#ece3d2] p-4 text-sm text-[#2b3427]">
               <p className="font-semibold">{item.title}</p>
-              <p className="mt-1 text-antique-muted">{formattedPrice}</p>
+              <p className="mt-1 text-[#625d52]">{formattedPrice}</p>
             </div>
 
             <form className="mt-6 space-y-4" onSubmit={handleBuyNowSubmit}>
-              <input
-                className="form-input"
-                name="name"
-                onChange={handleBuyNowChange}
-                placeholder="Your name"
-                required
-                value={buyNowForm.name}
-              />
-              <input
-                className="form-input"
-                name="email"
-                onChange={handleBuyNowChange}
-                placeholder="Email address"
-                required
-                type="email"
-                value={buyNowForm.email}
-              />
-              <input
-                className="form-input"
-                name="phone"
-                onChange={handleBuyNowChange}
-                placeholder="Phone number"
-                required
-                value={buyNowForm.phone}
-              />
-              <textarea
-                className="form-input min-h-[120px]"
-                name="comment"
-                onChange={handleBuyNowChange}
-                placeholder="Comment (optional)"
-                value={buyNowForm.comment}
-              />
+              <input className="form-input" name="name" onChange={handleBuyNowChange} placeholder="Your name" required value={buyNowForm.name} />
+              <input className="form-input" name="email" onChange={handleBuyNowChange} placeholder="Email address" required type="email" value={buyNowForm.email} />
+              <input className="form-input" name="phone" onChange={handleBuyNowChange} placeholder="Phone number" required value={buyNowForm.phone} />
+              <textarea className="form-input min-h-[120px]" name="comment" onChange={handleBuyNowChange} placeholder="Comment (optional)" value={buyNowForm.comment} />
 
               {buyNowSuccess ? <p className="rounded-2xl bg-emerald-50 p-4 text-emerald-700">{buyNowSuccess}</p> : null}
               {buyNowError ? <p className="rounded-2xl bg-red-50 p-4 text-red-700">{buyNowError}</p> : null}
 
               <div className="flex flex-col gap-3 sm:flex-row">
-                <button className="btn-primary flex-1 justify-center" disabled={buyNowLoading} type="submit">
+                <button className="btn-primary flex-1" disabled={buyNowLoading} type="submit">
                   {buyNowLoading ? "Submitting..." : "Submit Buy Now Request"}
                 </button>
-                <button
-                  className="btn-secondary flex-1 justify-center"
-                  onClick={() => setBuyNowOpen(false)}
-                  type="button"
-                >
+                <button className="btn-secondary flex-1" onClick={() => setBuyNowOpen(false)} type="button">
                   Cancel
                 </button>
               </div>
@@ -264,12 +232,12 @@ export default function ItemDetail() {
       ) : null}
 
       {relatedItems.length ? (
-        <section className="bg-white">
+        <section className="bg-[#ece3d5]/65">
           <div className="section-shell">
             <div className="section-heading">
               <div>
                 <p className="eyebrow">You May Also Like</p>
-                <h2 className="section-title">Related Pieces</h2>
+                <h2 className="section-title">Related pieces</h2>
               </div>
             </div>
 

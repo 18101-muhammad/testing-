@@ -37,7 +37,7 @@ export default function Contact() {
       setSuccess("");
       setError("");
       await submitEnquiry(form);
-      setSuccess("Thank you! We will be in touch soon.");
+      setSuccess("Thank you. We will be in touch shortly.");
       setForm(initialForm);
     } catch {
       setError("We could not send your enquiry right now. Please try again later.");
@@ -52,52 +52,59 @@ export default function Contact() {
         <title>Contact | Never The Twain</title>
       </Helmet>
 
-      <section className="section-shell">
-        <div className="grid gap-8 lg:grid-cols-[1fr_0.85fr]">
-          <div className="rounded-[32px] border border-antique-gold/20 bg-white p-8 shadow-soft">
+      <section className="section-shell pt-14">
+        <div className="grid gap-8 xl:grid-cols-[1.05fr_0.95fr]">
+          <div className="space-y-6">
+            <div className="editorial-card rounded-[34px] bg-[#232820] p-8 text-[#f0e7d9] shadow-soft">
+              <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">Appointments & Enquiries</p>
+              <h1 className="mt-4 max-w-xl font-display text-5xl leading-tight">For sourcing requests, private viewings, and purchase enquiries.</h1>
+              <p className="mt-5 max-w-xl text-sm leading-8 text-[#efe6d5]/76">
+                Tell us what you are looking for, which room you are shaping, or which piece has caught your attention. A more detailed enquiry usually leads to a better recommendation.
+              </p>
+            </div>
+
+            <div className="editorial-card rounded-[34px] p-8 shadow-soft">
+              <h2 className="font-display text-3xl text-[#263024]">Visit or write</h2>
+              <div className="mt-6 space-y-4 text-[#5e594d]">
+                <p>
+                  <span className="font-semibold text-[#263024]">Opening Hours:</span> Monday to Saturday, 10:00 - 18:00
+                </p>
+                <p>
+                  <span className="font-semibold text-[#263024]">Location:</span> Maynooth, Ireland
+                </p>
+                <p>Private viewings and sourcing appointments are available by request.</p>
+              </div>
+
+              <div className="mt-8 rounded-[28px] bg-[#ece3d2] p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#b68a3c]">WhatsApp</p>
+                <p className="mt-3 max-w-md text-sm leading-7 text-[#5f584b]">
+                  Reach out directly for availability, delivery questions, and sourcing requests. Your privacy is preserved and the number is never shown on site.
+                </p>
+                <div className="mt-6">
+                  <WhatsAppButton label="General WhatsApp Enquiry" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="editorial-card rounded-[34px] p-8 shadow-soft">
             <p className="eyebrow">Contact</p>
-            <h1 className="section-title">Get In Touch</h1>
+            <h2 className="section-title">Start an enquiry</h2>
 
             <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
               <input className="form-input" name="name" onChange={handleChange} placeholder="Your name" required value={form.name} />
               <input className="form-input" name="email" onChange={handleChange} placeholder="Email address" required type="email" value={form.email} />
               <input className="form-input" name="phone" onChange={handleChange} placeholder="Phone number" required value={form.phone} />
               <input className="form-input" name="itemReference" onChange={handleChange} placeholder="Item reference (optional)" value={form.itemReference} />
-              <textarea className="form-input min-h-[180px]" name="message" onChange={handleChange} placeholder="Tell us what caught your eye" required value={form.message} />
+              <textarea className="form-input min-h-[200px]" name="message" onChange={handleChange} placeholder="Tell us what caught your eye" required value={form.message} />
 
               {success ? <p className="rounded-2xl bg-emerald-50 p-4 text-emerald-700">{success}</p> : null}
               {error ? <p className="rounded-2xl bg-red-50 p-4 text-red-700">{error}</p> : null}
 
-              <button className="btn-primary justify-center" disabled={loading} type="submit">
+              <button className="btn-primary w-full" disabled={loading} type="submit">
                 {loading ? "Sending..." : "Send Enquiry"}
               </button>
             </form>
-          </div>
-
-          <div className="space-y-6">
-            <div className="rounded-[32px] bg-antique-navy p-8 text-antique-cream shadow-soft">
-              <p className="eyebrow text-antique-gold">Direct Enquiry</p>
-              <h2 className="font-display text-4xl">Prefer WhatsApp?</h2>
-              <p className="mt-4 max-w-md text-sm leading-7 text-antique-cream/80">
-                Reach out directly for availability, delivery questions, and sourcing requests. Your privacy is preserved and the number is never shown on site.
-              </p>
-              <div className="mt-6">
-                <WhatsAppButton label="General WhatsApp Enquiry" />
-              </div>
-            </div>
-
-            <div className="rounded-[32px] border border-antique-gold/20 bg-white p-8 shadow-soft">
-              <h3 className="font-display text-3xl text-antique-navy">Visit Or Write</h3>
-              <div className="mt-6 space-y-4 text-antique-muted">
-                <p>
-                  <span className="font-semibold text-antique-navy">Opening Hours:</span> Monday to Saturday, 10:00 - 18:00
-                </p>
-                <p>
-                  <span className="font-semibold text-antique-navy">Location:</span> Maynooth, Ireland
-                </p>
-                <p>Private viewings and sourcing appointments are available by request.</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
