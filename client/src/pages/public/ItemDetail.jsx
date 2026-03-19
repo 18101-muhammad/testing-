@@ -115,7 +115,13 @@ export default function ItemDetail() {
         <div className="grid gap-10 xl:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-4">
             <div className="editorial-outline image-sheen editorial-card relative overflow-hidden rounded-[34px] shadow-soft">
-              <img alt={item.title} className="aspect-[4/3] w-full bg-[#e9dfcf] object-contain p-4" src={mainImage} />
+              <img
+                alt={item.title}
+                className="aspect-[4/3] w-full bg-[#e9dfcf] object-contain p-4"
+                decoding="async"
+                fetchPriority="high"
+                src={mainImage}
+              />
               {item.sold ? (
                 <span className="absolute left-5 top-5 rounded-full bg-[#5c2f2b] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">
                   Sold
@@ -136,7 +142,7 @@ export default function ItemDetail() {
                     onClick={() => setSelectedImage(image)}
                     type="button"
                   >
-                    <img alt={item.title} className="aspect-square w-full rounded-xl object-cover" src={buildImageUrl(image)} />
+                    <img alt={item.title} className="aspect-square w-full rounded-xl object-cover" decoding="async" loading="lazy" src={buildImageUrl(image)} />
                     <span className="block px-2 pb-2 pt-2 text-left text-[10px] font-semibold uppercase tracking-[0.22em] text-[#5b564a]">
                       {index === 0 ? "Primary view" : `View ${index + 1}`}
                     </span>

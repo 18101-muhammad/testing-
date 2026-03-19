@@ -19,7 +19,13 @@ export default function ItemCard({ item }) {
       to={`/shop/${item._id || item.id || item.slug}`}
     >
       <div className="image-sheen relative aspect-[4/3] overflow-hidden bg-[#e8dfce]">
-        <img alt={item.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]" src={imageUrl} />
+        <img
+          alt={item.title}
+          className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]"
+          decoding="async"
+          loading="lazy"
+          src={imageUrl}
+        />
         <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/55 via-black/10 to-transparent opacity-95" />
         <div className="absolute left-4 top-4 z-[2] rounded-full border border-white/20 bg-black/25 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-white backdrop-blur-sm">
           Curated Piece

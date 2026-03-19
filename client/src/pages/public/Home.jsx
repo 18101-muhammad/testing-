@@ -93,6 +93,8 @@ export default function Home() {
                 <img
                   alt={featuredItems[0].title}
                   className="aspect-[0.9] w-full object-cover"
+                  decoding="async"
+                  fetchPriority="high"
                   src={buildImageUrl(firstImage(featuredItems[0]))}
                 />
                 <div className="absolute inset-x-0 bottom-0 z-[2] bg-gradient-to-t from-black/80 via-black/35 to-transparent px-6 pb-7 pt-16">
@@ -150,6 +152,19 @@ export default function Home() {
             ))}
           </div>
         ) : null}
+      </section>
+
+      <section className="section-shell pt-0">
+        <div className="paper-panel editorial-card grid gap-6 rounded-[34px] p-8 shadow-soft lg:grid-cols-[0.85fr_1.15fr]">
+          <div>
+            <p className="eyebrow">Collector's Note</p>
+            <h2 className="mt-4 font-display text-4xl leading-tight text-[#263024]">The collection is built for rooms that want gravity, not clutter.</h2>
+          </div>
+          <div className="grid gap-5 text-sm leading-8 text-[#5d574b] sm:grid-cols-2">
+            <p>Each piece is chosen for silhouette, surface, and how it will live with other objects rather than how loudly it performs on its own.</p>
+            <p>That means fewer interchangeable items, more material character, and a catalogue that feels closer to a private source list than a fast shop.</p>
+          </div>
+        </div>
       </section>
 
       <section className="bg-[#ece4d5]/70">
