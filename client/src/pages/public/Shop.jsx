@@ -85,6 +85,15 @@ export default function Shop() {
           <p className="max-w-md text-sm leading-7 text-[#615b4f]">Showing {items.length} pieces across furniture, decorative objects, and collector-led finds.</p>
         </div>
 
+        <div className="paper-panel editorial-card mb-8 rounded-[32px] px-6 py-5 shadow-soft">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm leading-7 text-[#5b5548]">
+              The collection is arranged less like a catalogue and more like a room: quieter pieces sit beside stronger ones, with space for contrast and surprise.
+            </p>
+            <span className="text-xs font-semibold uppercase tracking-[0.32em] text-[#b68a3c]">Curated online</span>
+          </div>
+        </div>
+
         <div className="grid gap-8 xl:grid-cols-[300px_1fr]">
           <form className="editorial-card h-fit rounded-[32px] p-6 shadow-soft" onSubmit={applyFilters}>
             <div className="space-y-6">

@@ -114,18 +114,22 @@ export default function ItemDetail() {
       <section className="section-shell pt-14">
         <div className="grid gap-10 xl:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-4">
-            <div className="editorial-card relative overflow-hidden rounded-[34px] shadow-soft">
+            <div className="editorial-outline image-sheen editorial-card relative overflow-hidden rounded-[34px] shadow-soft">
               <img alt={item.title} className="aspect-[4/3] w-full bg-[#e9dfcf] object-contain p-4" src={mainImage} />
               {item.sold ? (
                 <span className="absolute left-5 top-5 rounded-full bg-[#5c2f2b] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">
                   Sold
                 </span>
               ) : null}
+              <div className="absolute bottom-5 left-5 z-[2] rounded-[24px] border border-white/15 bg-black/35 px-4 py-3 text-white backdrop-blur-sm">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#d6b57d]">Main image</p>
+                <p className="mt-2 font-display text-2xl leading-tight">{item.title}</p>
+              </div>
             </div>
 
             {gallery.length > 1 ? (
               <div className="grid grid-cols-4 gap-3">
-                {gallery.map((image) => (
+                {gallery.map((image, index) => (
                   <button
                     className={`overflow-hidden rounded-2xl border p-1 ${selectedImage === image ? "border-[#b68a3c] bg-[#f0e7d7]" : "border-[#2f382d]/10 bg-white/70"}`}
                     key={image}
@@ -133,6 +137,9 @@ export default function ItemDetail() {
                     type="button"
                   >
                     <img alt={item.title} className="aspect-square w-full rounded-xl object-cover" src={buildImageUrl(image)} />
+                    <span className="block px-2 pb-2 pt-2 text-left text-[10px] font-semibold uppercase tracking-[0.22em] text-[#5b564a]">
+                      {index === 0 ? "Primary view" : `View ${index + 1}`}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -140,7 +147,7 @@ export default function ItemDetail() {
           </div>
 
           <div className="space-y-6">
-            <div className="editorial-card rounded-[34px] p-8 shadow-soft">
+            <div className="paper-panel editorial-card rounded-[34px] p-8 shadow-soft">
               <p className="eyebrow">Collection Detail</p>
               <h1 className="mt-4 font-display text-5xl leading-tight text-[#263024]">{item.title}</h1>
 
@@ -152,6 +159,21 @@ export default function ItemDetail() {
 
               <p className="mt-8 font-display text-4xl text-[#b68a3c]">{formattedPrice}</p>
               <p className="mt-6 text-base leading-8 text-[#5f584b]">{item.description}</p>
+
+              <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                <div className="rounded-[24px] bg-white/70 p-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#b68a3c]">Era</p>
+                  <p className="mt-2 text-sm font-semibold text-[#263024]">{item.era || "Not specified"}</p>
+                </div>
+                <div className="rounded-[24px] bg-white/70 p-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#b68a3c]">Condition</p>
+                  <p className="mt-2 text-sm font-semibold text-[#263024]">{item.condition || "Not specified"}</p>
+                </div>
+                <div className="rounded-[24px] bg-white/70 p-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#b68a3c]">Category</p>
+                  <p className="mt-2 text-sm font-semibold text-[#263024]">{item.category?.name || item.category || "General collection"}</p>
+                </div>
+              </div>
             </div>
 
             <div className="editorial-card rounded-[34px] p-6 shadow-soft">
@@ -178,6 +200,13 @@ export default function ItemDetail() {
               <div className="mt-5 border-t border-[#2f382d]/10 pt-5">
                 <ShareButtons imageUrl={mainImage} title={item.title} />
               </div>
+            </div>
+
+            <div className="editorial-card rounded-[34px] bg-[#232820] p-6 text-[#efe6d5] shadow-soft">
+              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#d6b57d]">Appointments</p>
+              <p className="mt-4 text-sm leading-8 text-[#efe6d5]/78">
+                If you would like more images, dimensions, or a private viewing arrangement, send an enquiry and we will come back with detail rather than a generic stock reply.
+              </p>
             </div>
           </div>
         </div>
