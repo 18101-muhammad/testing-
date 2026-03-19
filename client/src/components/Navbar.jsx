@@ -25,12 +25,17 @@ export default function Navbar() {
         }`}
       >
         <div className="flex items-center gap-4">
-          <Link className={`font-display text-2xl tracking-[0.08em] ${scrolled ? "text-[#f0e8d8]" : "text-[#2b3427]"}`} to="/">
-            Never The Twain
-          </Link>
-          <span className={`hidden text-[10px] font-semibold uppercase tracking-[0.34em] md:block ${scrolled ? "text-[#d8ccb6]/70" : "text-[#6a6457]"}`}>
-            Curated interiors
-          </span>
+          <div className={`hidden h-10 w-10 items-center justify-center rounded-full border text-[10px] font-semibold uppercase tracking-[0.24em] md:flex ${scrolled ? "border-white/12 text-[#d8ccb6]" : "border-[#2f382d]/12 text-[#5e594d]"}`}>
+            NTT
+          </div>
+          <div className="flex flex-col">
+            <Link className={`font-display text-2xl tracking-[0.08em] ${scrolled ? "text-[#f0e8d8]" : "text-[#2b3427]"}`} to="/">
+              Never The Twain
+            </Link>
+            <span className={`hidden text-[10px] font-semibold uppercase tracking-[0.34em] md:block ${scrolled ? "text-[#d8ccb6]/70" : "text-[#6a6457]"}`}>
+              Curated interiors
+            </span>
+          </div>
         </div>
 
         <button
@@ -76,7 +81,7 @@ export default function Navbar() {
             }`}
             to="/contact"
           >
-            Enquire
+            Arrange Visit
           </Link>
         </nav>
       </div>
@@ -103,7 +108,7 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
               to="/contact"
             >
-              Enquire
+              Arrange Visit
             </Link>
           </div>
         </nav>

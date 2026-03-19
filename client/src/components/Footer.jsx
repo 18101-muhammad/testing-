@@ -4,14 +4,19 @@ export default function Footer() {
   return (
     <footer className="mt-16 overflow-hidden bg-[#171914] text-[#efe6d5]">
       <div className="border-b border-white/8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-12 sm:px-6 lg:flex-row lg:items-end lg:justify-between lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
           <div className="space-y-4">
             <p className="text-xs font-semibold uppercase tracking-[0.36em] text-[#b68a3c]">Private Collection House</p>
             <h2 className="font-display text-5xl leading-none text-[#f3ecdf]">Never The Twain</h2>
           </div>
-          <p className="max-w-2xl text-sm leading-8 text-[#efe6d5]/70">
-            Decorative antiques and quietly dramatic pieces chosen for homes that want atmosphere, line, and memory rather than noise.
-          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <p className="text-sm leading-8 text-[#efe6d5]/70">
+              Decorative antiques and quietly dramatic pieces chosen for homes that want atmosphere, line, and memory rather than noise.
+            </p>
+            <p className="text-sm leading-8 text-[#efe6d5]/58">
+              The collection is intentionally small, slower to grow, and arranged for people who care how objects sit together over time.
+            </p>
+          </div>
         </div>
       </div>
 

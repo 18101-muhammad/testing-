@@ -38,6 +38,9 @@ export default function Home() {
     fetchHomeData();
   }, []);
 
+  const leadItem = featuredItems[0];
+  const secondaryItems = featuredItems.slice(1, 3);
+
   return (
     <>
       <Helmet>
@@ -49,74 +52,112 @@ export default function Home() {
       </Helmet>
 
       <section className="hero-grid relative isolate overflow-hidden text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(182,138,60,0.24),transparent_24%)]" />
-        <div className="absolute left-[-10%] top-24 h-64 w-64 rounded-full bg-[#b68a3c]/10 blur-3xl" />
-        <div className="absolute bottom-[-5rem] right-[8%] h-72 w-72 rounded-full bg-white/5 blur-3xl" />
-        <div className="relative mx-auto grid max-w-7xl gap-12 px-4 pb-20 pt-24 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-8 lg:pb-28 lg:pt-28">
-          <div className="animate-fade-in space-y-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.38em] text-[#d6b57d]">Collected Interiors • Ireland</p>
-            <div className="space-y-5">
-              <h1 className="max-w-4xl font-display text-5xl leading-[0.98] sm:text-6xl lg:text-8xl">
-                Rooms remember more when every object has a past.
-              </h1>
-              <p className="max-w-2xl text-lg leading-8 text-[#efe6d5]/80 sm:text-xl">
-                Never The Twain brings together antiques, curios, and quietly striking furnishings selected for homes that prefer atmosphere over excess.
-              </p>
-            </div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_12%,rgba(182,138,60,0.22),transparent_20%),radial-gradient(circle_at_88%_18%,rgba(255,255,255,0.08),transparent_22%),linear-gradient(180deg,transparent,rgba(0,0,0,0.12))]" />
+        <div className="absolute left-[-6rem] top-24 h-64 w-64 rounded-full border border-white/10" />
+        <div className="absolute right-[-5rem] top-10 h-80 w-80 rounded-full bg-[#b68a3c]/8 blur-3xl" />
 
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <Link className="btn-primary" to="/shop">
-                View Collection
-              </Link>
-              <Link className="btn-secondary border-white/15 bg-white/5 text-white hover:bg-white/10 hover:text-white" to="/contact">
-                Book A Viewing
-              </Link>
-            </div>
+        <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-6 lg:px-8 lg:pb-28 lg:pt-24">
+          <div className="grid gap-8 xl:grid-cols-[1.1fr_0.9fr]">
+            <div className="animate-fade-in space-y-8">
+              <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">
+                <span>Never The Twain</span>
+                <span className="h-px w-10 bg-[#d6b57d]/40" />
+                <span>Maynooth / Ireland</span>
+              </div>
 
-            <div className="grid max-w-2xl gap-4 sm:grid-cols-3">
-              {[
-                { label: "Collected pieces", value: `${featuredItems.length || 0}+` },
-                { label: "Curated categories", value: `${categories.length || 0}` },
-                { label: "Private appointments", value: "By request" },
-              ].map((stat) => (
-                <div className="animate-fade-in-delayed rounded-[28px] border border-white/10 bg-white/5 px-5 py-5 backdrop-blur-sm" key={stat.label}>
-                  <p className="font-display text-3xl text-[#f7f1e3]">{stat.value}</p>
-                  <p className="mt-2 text-xs uppercase tracking-[0.26em] text-[#d7ccb8]/72">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid gap-4 self-end">
-            {featuredItems[0] && firstImage(featuredItems[0]) ? (
-              <div className="editorial-outline image-sheen animate-float relative overflow-hidden rounded-[38px] border border-white/10 bg-black/20 shadow-2xl shadow-black/20">
-                <img
-                  alt={featuredItems[0].title}
-                  className="aspect-[0.9] w-full object-cover"
-                  decoding="async"
-                  fetchPriority="high"
-                  src={buildImageUrl(firstImage(featuredItems[0]))}
-                />
-                <div className="absolute inset-x-0 bottom-0 z-[2] bg-gradient-to-t from-black/80 via-black/35 to-transparent px-6 pb-7 pt-16">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">Featured Interior Anchor</p>
-                  <p className="mt-3 font-display text-3xl leading-tight text-[#f4ecdf]">{featuredItems[0].title}</p>
-                  <p className="mt-3 text-sm uppercase tracking-[0.26em] text-[#efe6d5]/72">
-                    {featuredItems[0].price != null ? `EUR ${Number(featuredItems[0].price).toLocaleString()}` : "Price on request"}
+              <div className="space-y-6">
+                <h1 className="max-w-5xl font-display text-[3.3rem] leading-[0.92] sm:text-[4.5rem] lg:text-[7rem]">
+                  Decorative pieces for interiors that prefer memory over display.
+                </h1>
+                <div className="grid max-w-3xl gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+                  <p className="text-lg leading-8 text-[#efe6d5]/82 sm:text-xl">
+                    Never The Twain brings together antiques, curios, and quietly dramatic furnishings chosen for line, texture, and the kind of presence that improves a room rather than merely filling it.
                   </p>
+                  <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">Collector's view</p>
+                    <p className="mt-3 text-sm leading-7 text-[#efe6d5]/78">
+                      Fewer pieces, stronger character, and a collection paced more like an interior source book than a fast catalogue.
+                    </p>
+                  </div>
                 </div>
               </div>
-            ) : null}
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="paper-panel editorial-card animate-float-delayed rounded-[34px] p-6 text-[#20251d]">
-                <p className="eyebrow">Approach</p>
-                <p className="mt-4 text-lg leading-8 text-[#4f574a]">
-                  A slower collection of furniture and decorative objects chosen for line, mood, wear, and the kind of presence that improves with age.
-                </p>
+              <div className="flex flex-col gap-4 sm:flex-row">
+                <Link className="btn-primary" to="/shop">
+                  View Collection
+                </Link>
+                <Link className="btn-secondary border-white/15 bg-white/5 text-white hover:bg-white/10 hover:text-white" to="/contact">
+                  Arrange A Viewing
+                </Link>
               </div>
-              <div className="editorial-card rounded-[34px] bg-[#2a3027]/84 p-6 text-[#f1e8d9]">
-                <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">For interiors with restraint</p>
-                <p className="mt-4 font-display text-3xl leading-tight">Decorative pieces that feel inherited rather than merely bought.</p>
+
+              <div className="grid max-w-3xl gap-4 sm:grid-cols-3">
+                {[
+                  { label: "Featured pieces", value: `${featuredItems.length || 0}+` },
+                  { label: "Curated categories", value: `${categories.length || 0}` },
+                  { label: "Private appointments", value: "Available" },
+                ].map((stat) => (
+                  <div className="rounded-[28px] border border-white/10 bg-black/10 px-5 py-5 backdrop-blur-sm" key={stat.label}>
+                    <p className="font-display text-3xl text-[#f7f1e3]">{stat.value}</p>
+                    <p className="mt-2 text-xs uppercase tracking-[0.26em] text-[#d7ccb8]/72">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-5 self-end lg:grid-cols-[0.78fr_0.22fr] xl:grid-cols-[0.82fr_0.18fr]">
+              <div className="space-y-5">
+                {leadItem && firstImage(leadItem) ? (
+                  <div className="editorial-outline image-sheen animate-float relative overflow-hidden rounded-[40px] border border-white/10 bg-black/20 shadow-2xl shadow-black/20">
+                    <img
+                      alt={leadItem.title}
+                      className="aspect-[0.95] w-full object-cover"
+                      decoding="async"
+                      fetchPriority="high"
+                      src={buildImageUrl(firstImage(leadItem))}
+                    />
+                    <div className="absolute inset-x-0 bottom-0 z-[2] bg-gradient-to-t from-black/85 via-black/40 to-transparent px-6 pb-7 pt-20">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">Featured piece</p>
+                      <p className="mt-3 max-w-md font-display text-4xl leading-tight text-[#f4ecdf]">{leadItem.title}</p>
+                      <div className="mt-4 flex items-center justify-between gap-4">
+                        <p className="text-sm uppercase tracking-[0.26em] text-[#efe6d5]/72">
+                          {leadItem.price != null ? `EUR ${Number(leadItem.price).toLocaleString()}` : "Price on request"}
+                        </p>
+                        <Link className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-white backdrop-blur-sm" to={`/shop/${leadItem._id || leadItem.id || leadItem.slug}`}>
+                          View Piece
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="paper-panel editorial-card rounded-[32px] p-6">
+                    <p className="eyebrow">Approach</p>
+                    <p className="mt-4 text-base leading-8 text-[#4f574a]">
+                      Furniture and objects chosen for proportion, wear, and the quiet authority they lend to a room.
+                    </p>
+                  </div>
+                  <div className="editorial-card rounded-[32px] bg-[#2a3027]/88 p-6 text-[#f1e8d9]">
+                    <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">Not trend-led</p>
+                    <p className="mt-4 font-display text-3xl leading-tight">Collected to feel inherited rather than newly acquired.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="hidden gap-4 lg:grid">
+                {secondaryItems.map((item, index) =>
+                  firstImage(item) ? (
+                    <button
+                      className="editorial-outline image-sheen overflow-hidden rounded-[28px] border border-white/10 bg-black/20 text-left shadow-soft"
+                      key={item._id || item.id || index}
+                      onClick={() => navigate(`/shop/${item._id || item.id || item.slug}`)}
+                      type="button"
+                    >
+                      <img alt={item.title} className="aspect-[0.9] w-full object-cover" decoding="async" loading="lazy" src={buildImageUrl(firstImage(item))} />
+                    </button>
+                  ) : null
+                )}
               </div>
             </div>
           </div>
@@ -125,45 +166,41 @@ export default function Home() {
 
       <section className="border-y border-[#2f382d]/10 bg-white/35">
         <div className="mx-auto grid max-w-7xl gap-5 px-4 py-6 text-sm text-[#4f584b] sm:px-6 lg:grid-cols-[0.8fr_1.2fr_0.8fr] lg:px-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#b68a3c]">Never The Twain</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#b68a3c]">Private collection house</p>
           <p className="text-center leading-7">Antiques, curios, and decorative furniture selected for texture, proportion, and the feeling of permanence.</p>
-          <p className="text-right text-xs font-semibold uppercase tracking-[0.34em] text-[#44503d]">Private viewings in Maynooth</p>
+          <p className="text-right text-xs font-semibold uppercase tracking-[0.34em] text-[#44503d]">Viewings by appointment</p>
         </div>
       </section>
 
       <section className="section-shell">
-        <div className="section-heading">
-          <div>
+        <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr]">
+          <div className="space-y-5">
             <p className="eyebrow">Featured Collection</p>
-            <h2 className="section-title">A considered selection of standout pieces</h2>
+            <h2 className="section-title">Standout pieces with enough presence to set the room around them</h2>
+            <p className="max-w-md text-sm leading-8 text-[#5e5a50]">
+              Larger furniture, sculptural decorative objects, and collector-led finds intended to anchor a room rather than simply fill it.
+            </p>
           </div>
-          <p className="max-w-md text-sm leading-7 text-[#5e5a50]">
-            Larger furniture, sculptural decorative objects, and collector-led finds intended to anchor a room rather than simply fill it.
-          </p>
+
+          <div className="paper-panel editorial-card rounded-[34px] p-8 shadow-soft">
+            <div className="grid gap-5 text-sm leading-8 text-[#5d574b] sm:grid-cols-2">
+              <p>Each piece is chosen for silhouette, surface, and how it will live with other objects rather than how loudly it performs on its own.</p>
+              <p>That means fewer interchangeable items, more material character, and a catalogue that feels closer to a private source list than a fast shop.</p>
+            </div>
+          </div>
         </div>
 
-        {loading ? <LoadingSpinner label="Loading featured pieces..." /> : null}
-        {error ? <p className="rounded-3xl bg-red-50 p-6 text-red-700">{error}</p> : null}
+        <div className="mt-10">
+          {loading ? <LoadingSpinner label="Loading featured pieces..." /> : null}
+          {error ? <p className="rounded-3xl bg-red-50 p-6 text-red-700">{error}</p> : null}
 
-        {!loading && !error ? (
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {featuredItems.slice(0, 6).map((item) => (
-              <ItemCard item={item} key={item._id || item.id} />
-            ))}
-          </div>
-        ) : null}
-      </section>
-
-      <section className="section-shell pt-0">
-        <div className="paper-panel editorial-card grid gap-6 rounded-[34px] p-8 shadow-soft lg:grid-cols-[0.85fr_1.15fr]">
-          <div>
-            <p className="eyebrow">Collector's Note</p>
-            <h2 className="mt-4 font-display text-4xl leading-tight text-[#263024]">The collection is built for rooms that want gravity, not clutter.</h2>
-          </div>
-          <div className="grid gap-5 text-sm leading-8 text-[#5d574b] sm:grid-cols-2">
-            <p>Each piece is chosen for silhouette, surface, and how it will live with other objects rather than how loudly it performs on its own.</p>
-            <p>That means fewer interchangeable items, more material character, and a catalogue that feels closer to a private source list than a fast shop.</p>
-          </div>
+          {!loading && !error ? (
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {featuredItems.slice(0, 6).map((item) => (
+                <ItemCard item={item} key={item._id || item.id} />
+              ))}
+            </div>
+          ) : null}
         </div>
       </section>
 
@@ -172,7 +209,7 @@ export default function Home() {
           <div className="section-heading">
             <div>
               <p className="eyebrow">Browse By Category</p>
-              <h2 className="section-title">Collected by material, mood, and use</h2>
+              <h2 className="section-title">Collected by material, mood, and decorative use</h2>
             </div>
           </div>
 
@@ -184,10 +221,10 @@ export default function Home() {
                 const slug = category.slug || category.name?.toLowerCase().replace(/\s+/g, "-");
                 return (
                   <button
-                    className={`rounded-[30px] border px-6 py-10 text-left shadow-soft hover:-translate-y-1 ${
+                    className={`rounded-[32px] border px-6 py-10 text-left shadow-soft hover:-translate-y-1 ${
                       index % 3 === 0
                         ? "border-[#2f382d]/10 bg-[#232820] text-[#efe6d5]"
-                        : "border-[#2f382d]/10 bg-white/80 text-[#253022]"
+                        : "paper-panel border-[#2f382d]/10 bg-white/80 text-[#253022]"
                     }`}
                     key={category._id || category.id || slug}
                     onClick={() => navigate(`/shop?category=${encodeURIComponent(slug)}`)}
