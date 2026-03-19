@@ -21,12 +21,17 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
       <div
         className={`mx-auto flex max-w-7xl items-center justify-between rounded-full border px-5 py-4 backdrop-blur-xl ${
-          scrolled ? "border-white/10 bg-[#161814]/90 shadow-2xl shadow-black/10" : "border-[#2f382d]/10 bg-[#f5efe4]/88"
+          scrolled ? "border-white/10 bg-[#161814]/90 shadow-2xl shadow-black/10" : "border-[#2f382d]/10 bg-[#f5efe4]/88 shadow-soft"
         }`}
       >
-        <Link className={`font-display text-2xl tracking-[0.08em] ${scrolled ? "text-[#f0e8d8]" : "text-[#2b3427]"}`} to="/">
-          Never The Twain
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link className={`font-display text-2xl tracking-[0.08em] ${scrolled ? "text-[#f0e8d8]" : "text-[#2b3427]"}`} to="/">
+            Never The Twain
+          </Link>
+          <span className={`hidden text-[10px] font-semibold uppercase tracking-[0.34em] md:block ${scrolled ? "text-[#d8ccb6]/70" : "text-[#6a6457]"}`}>
+            Curated interiors
+          </span>
+        </div>
 
         <button
           aria-label="Toggle menu"
@@ -63,6 +68,16 @@ export default function Navbar() {
               {link.label}
             </NavLink>
           ))}
+          <Link
+            className={`ml-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.26em] ${
+              scrolled
+                ? "border-white/15 bg-white/5 text-[#efe6d5] hover:bg-white/10"
+                : "border-[#2f382d]/12 bg-white/55 text-[#2b3427] hover:bg-white"
+            }`}
+            to="/contact"
+          >
+            Enquire
+          </Link>
         </nav>
       </div>
 
@@ -83,6 +98,13 @@ export default function Navbar() {
                 {link.label}
               </NavLink>
             ))}
+            <Link
+              className="rounded-2xl border border-[#2f382d]/10 px-4 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-[#475141] hover:bg-[#2b3427]/5"
+              onClick={() => setOpen(false)}
+              to="/contact"
+            >
+              Enquire
+            </Link>
           </div>
         </nav>
       ) : null}

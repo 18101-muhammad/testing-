@@ -53,9 +53,18 @@ export default function Contact() {
       </Helmet>
 
       <section className="section-shell pt-14">
+        <div className="paper-panel editorial-card mb-8 rounded-[32px] px-6 py-5 shadow-soft">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm leading-7 text-[#5b5548]">
+              We handle sourcing questions, private appointments, and purchase enquiries personally. The more context you give, the better the reply.
+            </p>
+            <span className="text-xs font-semibold uppercase tracking-[0.32em] text-[#b68a3c]">Private by design</span>
+          </div>
+        </div>
+
         <div className="grid gap-8 xl:grid-cols-[1.05fr_0.95fr]">
           <div className="space-y-6">
-            <div className="editorial-card rounded-[34px] bg-[#232820] p-8 text-[#f0e7d9] shadow-soft">
+            <div className="editorial-outline editorial-card rounded-[34px] bg-[#232820] p-8 text-[#f0e7d9] shadow-soft">
               <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">Appointments & Enquiries</p>
               <h1 className="mt-4 max-w-xl font-display text-5xl leading-tight">For sourcing requests, private viewings, and purchase enquiries.</h1>
               <p className="mt-5 max-w-xl text-sm leading-8 text-[#efe6d5]/76">
@@ -63,16 +72,21 @@ export default function Contact() {
               </p>
             </div>
 
-            <div className="editorial-card rounded-[34px] p-8 shadow-soft">
+            <div className="paper-panel editorial-card rounded-[34px] p-8 shadow-soft">
               <h2 className="font-display text-3xl text-[#263024]">Visit or write</h2>
-              <div className="mt-6 space-y-4 text-[#5e594d]">
-                <p>
-                  <span className="font-semibold text-[#263024]">Opening Hours:</span> Monday to Saturday, 10:00 - 18:00
-                </p>
-                <p>
-                  <span className="font-semibold text-[#263024]">Location:</span> Maynooth, Ireland
-                </p>
-                <p>Private viewings and sourcing appointments are available by request.</p>
+              <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                <div className="rounded-[24px] bg-white/70 p-5 text-[#5e594d]">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#b68a3c]">Hours</p>
+                  <p className="mt-3 text-sm leading-7 text-[#263024]">Monday to Saturday, 10:00 - 18:00</p>
+                </div>
+                <div className="rounded-[24px] bg-white/70 p-5 text-[#5e594d]">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#b68a3c]">Location</p>
+                  <p className="mt-3 text-sm leading-7 text-[#263024]">Maynooth, Ireland</p>
+                </div>
+                <div className="rounded-[24px] bg-white/70 p-5 text-[#5e594d]">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#b68a3c]">Format</p>
+                  <p className="mt-3 text-sm leading-7 text-[#263024]">Private viewings and sourcing by request.</p>
+                </div>
               </div>
 
               <div className="mt-8 rounded-[28px] bg-[#ece3d2] p-6">
@@ -87,7 +101,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="editorial-card rounded-[34px] p-8 shadow-soft">
+          <div className="paper-panel editorial-card rounded-[34px] p-8 shadow-soft">
             <p className="eyebrow">Contact</p>
             <h2 className="section-title">Start an enquiry</h2>
 
