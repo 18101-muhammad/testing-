@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
 import { getCategories, getItems } from "../../api/api";
+import ItemCard from "../../components/ItemCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
 export default function Home() {
@@ -39,10 +40,10 @@ export default function Home() {
       </Helmet>
 
       <section className="hero-grid relative isolate overflow-hidden text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(182,138,60,0.14),transparent_18%),radial-gradient(circle_at_82%_20%,rgba(255,255,255,0.08),transparent_22%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(182,138,60,0.16),transparent_18%),radial-gradient(circle_at_82%_20%,rgba(255,255,255,0.08),transparent_22%)]" />
 
         <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-16 sm:px-6 lg:px-8 lg:pb-20 lg:pt-20">
-          <div className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
+          <div className="grid gap-8 xl:grid-cols-[1.1fr_0.9fr]">
             <div className="animate-fade-in space-y-8">
               <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">
                 <span>Never The Twain</span>
@@ -53,7 +54,7 @@ export default function Home() {
               </div>
 
               <div className="space-y-5">
-                <h1 className="max-w-4xl font-display text-4xl leading-[0.95] sm:text-5xl lg:text-[5.5rem]">
+                <h1 className="max-w-4xl font-display text-4xl leading-[0.95] sm:text-5xl lg:text-[5.2rem]">
                   Modern restraint. Old objects. Rooms with memory.
                 </h1>
                 <p className="max-w-2xl text-base leading-8 text-[#efe6d5]/82 sm:text-lg">
@@ -71,26 +72,30 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid gap-4 self-start md:grid-cols-2 xl:grid-cols-1">
-              <div className="rounded-[32px] border border-white/10 bg-white/6 p-6 backdrop-blur-sm">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">What matters here</p>
-                <p className="mt-4 text-sm leading-8 text-[#efe6d5]/78">
-                  Fewer pieces. Better character. A collection designed to feel considered rather than crowded.
-                </p>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-1">
-                {[
-                  { label: "Featured pieces", value: `${featuredItems.length || 0}+` },
-                  { label: "Curated categories", value: `${categories.length || 0}` },
-                  { label: "Private appointments", value: "Available" },
-                ].map((stat) => (
-                  <div className="rounded-[28px] border border-white/10 bg-black/10 px-5 py-5 backdrop-blur-sm" key={stat.label}>
-                    <p className="font-display text-3xl text-[#f7f1e3]">{stat.value}</p>
-                    <p className="mt-2 text-[11px] uppercase tracking-[0.24em] text-[#d7ccb8]/72">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
+            <div className="grid gap-4 self-start sm:grid-cols-3 xl:grid-cols-1">
+              {[
+                {
+                  label: "Featured pieces",
+                  value: `${featuredItems.length || 0}+`,
+                  text: "Selected to anchor a room, not just fill it.",
+                },
+                {
+                  label: "Curated categories",
+                  value: `${categories.length || 0}`,
+                  text: "Arranged by material, mood, and decorative use.",
+                },
+                {
+                  label: "Private appointments",
+                  value: "Available",
+                  text: "Viewings and enquiries handled personally.",
+                },
+              ].map((stat) => (
+                <div className="rounded-[28px] border border-white/10 bg-black/10 px-5 py-5 backdrop-blur-sm" key={stat.label}>
+                  <p className="font-display text-3xl text-[#f7f1e3]">{stat.value}</p>
+                  <p className="mt-2 text-[11px] uppercase tracking-[0.24em] text-[#d7ccb8]/72">{stat.label}</p>
+                  <p className="mt-4 text-sm leading-7 text-[#efe6d5]/70">{stat.text}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -105,39 +110,26 @@ export default function Home() {
       </section>
 
       <section className="section-shell">
-        <div className="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
-          <div className="space-y-5">
+        <div className="section-heading">
+          <div>
             <p className="eyebrow">Featured Collection</p>
-            <h2 className="section-title">A tighter, more contemporary way to browse antique pieces</h2>
-            <p className="max-w-md text-sm leading-8 text-[#5e5a50]">
-              Instead of leading with imagery, the homepage now leads with the shape of the collection itself: category, title, era, and intent.
-            </p>
+            <h2 className="section-title">A stronger way to browse the collection</h2>
           </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            {loading ? <LoadingSpinner label="Loading featured pieces..." /> : null}
-            {error ? <p className="rounded-3xl bg-red-50 p-6 text-red-700">{error}</p> : null}
-
-            {!loading &&
-              !error &&
-              featuredItems.slice(0, 4).map((item) => (
-                <Link
-                  className="paper-panel editorial-card rounded-[30px] p-6 shadow-soft hover:-translate-y-1"
-                  key={item._id || item.id}
-                  to={`/shop/${item._id || item.id || item.slug}`}
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#b68a3c]">{item.era || "Featured piece"}</p>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#636055]">{item.condition || "Collection"}</p>
-                  </div>
-                  <h3 className="mt-4 font-display text-3xl leading-tight text-[#263024]">{item.title}</h3>
-                  <p className="mt-6 text-sm uppercase tracking-[0.22em] text-[#5e594d]">
-                    {item.price != null ? `EUR ${Number(item.price).toLocaleString()}` : "Price on request"}
-                  </p>
-                </Link>
-              ))}
-          </div>
+          <p className="max-w-md text-sm leading-7 text-[#5e5a50]">
+            The main page stays clean, and the collection itself does the visual work here where the imagery actually matters.
+          </p>
         </div>
+
+        {loading ? <LoadingSpinner label="Loading featured pieces..." /> : null}
+        {error ? <p className="rounded-3xl bg-red-50 p-6 text-red-700">{error}</p> : null}
+
+        {!loading && !error ? (
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {featuredItems.slice(0, 6).map((item) => (
+              <ItemCard item={item} key={item._id || item.id} />
+            ))}
+          </div>
+        ) : null}
       </section>
 
       <section className="bg-[#ece4d5]/70">
