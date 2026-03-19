@@ -49,7 +49,7 @@ export default function Contact() {
   return (
     <>
       <Helmet>
-        <title>Contact | The Antique Room</title>
+        <title>Contact | Never The Twain</title>
       </Helmet>
 
       <section className="section-shell">

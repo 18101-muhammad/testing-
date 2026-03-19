@@ -108,7 +108,7 @@ export default function ItemDetail() {
   return (
     <>
       <Helmet>
-        <title>{item.title} | The Antique Room</title>
+        <title>{item.title} | Never The Twain</title>
       </Helmet>
 
       <section className="section-shell">

@@ -15,7 +15,7 @@ export default function AdminSidebar() {
     <aside className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-soft">
       <div className="mb-8">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Admin Panel</p>
-        <h2 className="mt-2 text-2xl font-semibold text-slate-900">The Antique Room</h2>
+        <h2 className="mt-2 text-2xl font-semibold text-slate-900">Never The Twain</h2>
       </div>
 
       <nav className="space-y-2">

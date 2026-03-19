@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="bg-antique-navy text-antique-cream">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-8">
         <div className="space-y-4">
-          <h2 className="font-display text-3xl text-antique-gold">The Antique Room</h2>
+          <h2 className="font-display text-3xl text-antique-gold">Never The Twain</h2>
           <p className="max-w-xl text-sm leading-7 text-antique-cream/80">
             Rare furniture, decorative treasures, and storied objects chosen for collectors who value craftsmanship and provenance.
           </p>
@@ -33,7 +33,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl justify-between px-4 py-4 text-xs text-antique-cream/70 sm:px-6 lg:px-8">
           <span>All rights reserved.</span>
-          <span>The Antique Room</span>
+          <span>Never The Twain</span>
         </div>
       </div>
     </footer>

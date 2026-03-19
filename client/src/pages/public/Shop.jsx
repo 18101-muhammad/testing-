@@ -73,7 +73,7 @@ export default function Shop() {
   return (
     <>
       <Helmet>
-        <title>Shop | The Antique Room</title>
+        <title>Shop | Never The Twain</title>
       </Helmet>
 
       <section className="section-shell">

@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>The Antique Room | Timeless Pieces, Enduring Stories</title>
+        <title>Never The Twain | Timeless Pieces, Enduring Stories</title>
         <meta
           content="Discover elegant antiques, curated vintage furniture, and one-of-a-kind decorative pieces."
           name="description"

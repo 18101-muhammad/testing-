@@ -21,7 +21,7 @@ export default function Navbar() {
     <header className={`sticky top-0 z-50 bg-antique-navy ${scrolled ? "shadow-xl shadow-slate-950/20" : ""}`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link className="font-display text-2xl tracking-wide text-antique-gold" to="/">
-          The Antique Room
+          Never The Twain
         </Link>
 
         <button
