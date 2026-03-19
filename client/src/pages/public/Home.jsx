@@ -40,68 +40,48 @@ export default function Home() {
       </Helmet>
 
       <section className="hero-grid relative isolate overflow-hidden text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(182,138,60,0.14),transparent_18%),radial-gradient(circle_at_82%_20%,rgba(255,255,255,0.08),transparent_22%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_12%,rgba(182,138,60,0.18),transparent_20%),linear-gradient(180deg,transparent,rgba(0,0,0,0.08))]" />
 
-        <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-16 sm:px-6 lg:px-8 lg:pb-20 lg:pt-20">
-          <div className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
-            <div className="animate-fade-in space-y-8">
-              <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">
-                <span>Never The Twain</span>
-                <span className="h-px w-10 bg-[#d6b57d]/35" />
-                <span>Maynooth</span>
-                <span className="h-px w-10 bg-[#d6b57d]/35" />
-                <span>Private Collection House</span>
-              </div>
+        <div className="relative mx-auto max-w-5xl px-4 pb-16 pt-16 text-center sm:px-6 lg:px-8 lg:pb-20 lg:pt-20">
+          <div className="animate-fade-in space-y-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">Never The Twain / Maynooth</p>
+            <h1 className="mx-auto max-w-4xl font-display text-4xl leading-[1] sm:text-5xl lg:text-6xl">
+              Decorative antiques for rooms that prefer character over noise.
+            </h1>
+            <p className="mx-auto max-w-2xl text-base leading-8 text-[#efe6d5]/80 sm:text-lg">
+              A slower collection of antiques, curios, and quietly striking furnishings chosen for proportion, texture, and lasting atmosphere.
+            </p>
 
-              <div className="space-y-5">
-                <h1 className="max-w-4xl font-display text-4xl leading-[0.95] sm:text-5xl lg:text-[5.5rem]">
-                  Modern restraint. Old objects. Rooms with memory.
-                </h1>
-                <p className="max-w-2xl text-base leading-8 text-[#efe6d5]/82 sm:text-lg">
-                  Never The Twain presents antiques, curios, and quietly dramatic furnishings selected for proportion, texture, and the kind of atmosphere that cannot be manufactured quickly.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-4 sm:flex-row">
-                <Link className="btn-primary" to="/shop">
-                  Explore Collection
-                </Link>
-                <Link className="btn-secondary border-white/15 bg-white/5 text-white hover:bg-white/10 hover:text-white" to="/contact">
-                  Arrange A Viewing
-                </Link>
-              </div>
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Link className="btn-primary" to="/shop">
+                View Collection
+              </Link>
+              <Link className="btn-secondary border-white/15 bg-white/5 text-white hover:bg-white/10 hover:text-white" to="/contact">
+                Arrange A Viewing
+              </Link>
             </div>
 
-            <div className="grid gap-4 self-start md:grid-cols-2 xl:grid-cols-1">
-              <div className="rounded-[32px] border border-white/10 bg-white/6 p-6 backdrop-blur-sm">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">What matters here</p>
-                <p className="mt-4 text-sm leading-8 text-[#efe6d5]/78">
-                  Fewer pieces. Better character. A collection designed to feel considered rather than crowded.
-                </p>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-1">
-                {[
-                  { label: "Featured pieces", value: `${featuredItems.length || 0}+` },
-                  { label: "Curated categories", value: `${categories.length || 0}` },
-                  { label: "Private appointments", value: "Available" },
-                ].map((stat) => (
-                  <div className="rounded-[28px] border border-white/10 bg-black/10 px-5 py-5 backdrop-blur-sm" key={stat.label}>
-                    <p className="font-display text-3xl text-[#f7f1e3]">{stat.value}</p>
-                    <p className="mt-2 text-[11px] uppercase tracking-[0.24em] text-[#d7ccb8]/72">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
+            <div className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-3">
+              {[
+                { label: "Featured pieces", value: `${featuredItems.length || 0}+` },
+                { label: "Curated categories", value: `${categories.length || 0}` },
+                { label: "Private appointments", value: "Available" },
+              ].map((stat) => (
+                <div className="rounded-[24px] border border-white/10 bg-black/10 px-5 py-4 backdrop-blur-sm" key={stat.label}>
+                  <p className="font-display text-2xl text-[#f7f1e3]">{stat.value}</p>
+                  <p className="mt-2 text-[11px] uppercase tracking-[0.24em] text-[#d7ccb8]/72">{stat.label}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-y border-[#2f382d]/10 bg-white/40">
-        <div className="mx-auto grid max-w-7xl gap-5 px-4 py-5 text-sm text-[#4f584b] sm:px-6 lg:grid-cols-[0.9fr_1.2fr_0.9fr] lg:px-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#b68a3c]">Collected with patience</p>
-          <p className="text-center leading-7">Antiques and decorative pieces selected for permanence, atmosphere, and how they live with a room over time.</p>
-          <p className="text-right text-xs font-semibold uppercase tracking-[0.34em] text-[#44503d]">By appointment in Maynooth</p>
+      <section className="border-y border-[#2f382d]/10 bg-white/35">
+        <div className="mx-auto grid max-w-6xl gap-5 px-4 py-5 text-sm text-[#4f584b] sm:px-6 lg:grid-cols-[0.9fr_1.2fr_0.9fr] lg:px-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#b68a3c]">Private collection house</p>
+          <p className="text-center leading-7">Antiques, curios, and decorative furniture selected for texture, proportion, and permanence.</p>
+          <p className="text-right text-xs font-semibold uppercase tracking-[0.34em] text-[#44503d]">Viewings by appointment</p>
         </div>
       </section>
 
