@@ -7,11 +7,11 @@ export default function Footer() {
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
           <div className="space-y-4">
             <p className="text-xs font-semibold uppercase tracking-[0.36em] text-[#b68a3c]">Private Collection House</p>
-            <h2 className="font-display text-5xl leading-none text-[#f3ecdf]">Never The Twain</h2>
+            <h2 className="font-display text-5xl leading-none text-[#f3ecdf]">Twain Antiques & Curios</h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <p className="text-sm leading-8 text-[#efe6d5]/70">
-              Decorative antiques and quietly dramatic pieces chosen for homes that want atmosphere, line, and memory rather than noise.
+              Curiosities Collected From the Edge of Time.
             </p>
             <p className="text-sm leading-8 text-[#efe6d5]/58">
               The collection is intentionally small, slower to grow, and arranged for people who care how objects sit together over time.
@@ -70,8 +70,8 @@ export default function Footer() {
 
       <div className="border-t border-white/8">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4 text-xs uppercase tracking-[0.24em] text-[#efe6d5]/50 sm:flex-row sm:justify-between sm:px-6 lg:px-8">
-          <span>Never The Twain</span>
-          <span>Collected with patience</span>
+          <span>Twain Antiques & Curios</span>
+          <span>Curiosities Collected From the Edge of Time</span>
         </div>
       </div>
     </footer>

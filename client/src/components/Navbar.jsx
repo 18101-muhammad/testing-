@@ -30,10 +30,10 @@ export default function Navbar() {
           </div>
           <div className="flex flex-col">
             <Link className={`font-display text-2xl tracking-[0.08em] ${scrolled ? "text-[#f0e8d8]" : "text-[#2b3427]"}`} to="/">
-              Never The Twain
+              Twain Antiques & Curios
             </Link>
             <span className={`hidden text-[10px] font-semibold uppercase tracking-[0.34em] md:block ${scrolled ? "text-[#d8ccb6]/70" : "text-[#6a6457]"}`}>
-              Curated interiors
+              Curiosities Collected From the Edge of Time
             </span>
           </div>
         </div>
