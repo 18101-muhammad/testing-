@@ -40,9 +40,9 @@ fi
 pushd "${RELEASE_DIR}/server" > /dev/null
 rm -rf node_modules
 if [[ -f package-lock.json ]]; then
-  npm ci --omit=dev
+  npm ci --omit=dev --no-audit --no-fund
 else
-  npm install --omit=dev
+  npm install --omit=dev --no-audit --no-fund
 fi
 npm run bootstrap
 popd > /dev/null
@@ -50,9 +50,9 @@ popd > /dev/null
 pushd "${RELEASE_DIR}/client" > /dev/null
 rm -rf node_modules
 if [[ -f package-lock.json ]]; then
-  npm ci
+  npm ci --no-audit --no-fund
 else
-  npm install
+  npm install --no-audit --no-fund
 fi
 npm run build
 popd > /dev/null
