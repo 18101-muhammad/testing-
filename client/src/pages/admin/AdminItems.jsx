@@ -94,7 +94,7 @@ export default function AdminItems() {
   return (
     <AdminShell
       actions={
-        <Link className="admin-button inline-flex w-auto" to="/admin/items/new">
+        <Link className="admin-button inline-flex w-full sm:w-auto" to="/admin/items/new">
           Add New Item
         </Link>
       }
@@ -108,62 +108,101 @@ export default function AdminItems() {
       {error ? <p className="rounded-3xl bg-red-50 p-6 text-red-700">{error}</p> : null}
 
       {!loading ? (
-        <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-soft">
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-left text-sm">
-              <thead className="bg-slate-50 text-slate-500">
-                <tr>
-                  <th className="px-4 py-4 font-semibold">Item</th>
-                  <th className="px-4 py-4 font-semibold">Price</th>
-                  <th className="px-4 py-4 font-semibold">Category</th>
-                  <th className="px-4 py-4 font-semibold">Sold</th>
-                  <th className="px-4 py-4 font-semibold">Featured</th>
-                  <th className="px-4 py-4 font-semibold">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredItems.map((item) => {
-                  const id = item._id || item.id;
-                  return (
-                    <tr className="border-t border-slate-100" key={id}>
-                      <td className="px-4 py-4">
-                        <div className="flex items-center gap-3">
-                          <img alt={item.title} className="h-14 w-14 rounded-2xl object-cover" src={buildImageUrl(imageFromItem(item))} />
-                          <div>
-                            <p className="font-semibold text-slate-900">{item.title}</p>
-                            <p className="text-xs text-slate-500">{item.era || "No era set"}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-slate-700">€{Number(item.price || 0).toLocaleString()}</td>
-                      <td className="px-4 py-4 text-slate-700">{item.category?.name || item.category || "-"}</td>
-                      <td className="px-4 py-4">
-                        <button className={`rounded-full px-3 py-1 font-semibold ${item.sold ? "bg-rose-100 text-rose-700" : "bg-slate-100 text-slate-700"}`} onClick={() => handleToggle(item, "sold")} type="button">
-                          {item.sold ? "Sold" : "Available"}
-                        </button>
-                      </td>
-                      <td className="px-4 py-4">
-                        <button className={`rounded-full px-3 py-1 font-semibold ${item.featured ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-slate-700"}`} onClick={() => handleToggle(item, "featured")} type="button">
-                          {item.featured ? "Featured" : "Standard"}
-                        </button>
-                      </td>
-                      <td className="px-4 py-4">
-                        <div className="flex gap-2">
-                          <Link className="admin-button-secondary inline-flex w-auto" to={`/admin/items/${id}`}>
-                            Edit
-                          </Link>
-                          <button className="rounded-2xl bg-rose-600 px-4 py-2 font-semibold text-white" onClick={() => handleDelete(id)} type="button">
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+        <>
+          <div className="space-y-4 md:hidden">
+            {filteredItems.map((item) => {
+              const id = item._id || item.id;
+              return (
+                <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-soft" key={id}>
+                  <div className="flex items-start gap-3">
+                    <img alt={item.title} className="h-20 w-20 rounded-2xl object-cover" src={buildImageUrl(imageFromItem(item))} />
+                    <div className="min-w-0 flex-1">
+                      <p className="font-semibold text-slate-900">{item.title}</p>
+                      <p className="mt-1 text-sm text-slate-500">{item.era || "No era set"}</p>
+                      <p className="mt-2 text-sm text-slate-600">{item.category?.name || item.category || "-"}</p>
+                      <p className="mt-2 text-lg font-semibold text-slate-900">EUR {Number(item.price || 0).toLocaleString()}</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <button className={`rounded-full px-3 py-1 text-sm font-semibold ${item.sold ? "bg-rose-100 text-rose-700" : "bg-slate-100 text-slate-700"}`} onClick={() => handleToggle(item, "sold")} type="button">
+                      {item.sold ? "Sold" : "Available"}
+                    </button>
+                    <button className={`rounded-full px-3 py-1 text-sm font-semibold ${item.featured ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-slate-700"}`} onClick={() => handleToggle(item, "featured")} type="button">
+                      {item.featured ? "Featured" : "Standard"}
+                    </button>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-2 gap-3">
+                    <Link className="admin-button-secondary" to={`/admin/items/${id}`}>
+                      Edit
+                    </Link>
+                    <button className="rounded-2xl bg-rose-600 px-4 py-3 font-semibold text-white" onClick={() => handleDelete(id)} type="button">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        </div>
+
+          <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-soft">
+            <div className="hidden overflow-x-auto md:block">
+              <table className="min-w-full text-left text-sm">
+                <thead className="bg-slate-50 text-slate-500">
+                  <tr>
+                    <th className="px-4 py-4 font-semibold">Item</th>
+                    <th className="px-4 py-4 font-semibold">Price</th>
+                    <th className="px-4 py-4 font-semibold">Category</th>
+                    <th className="px-4 py-4 font-semibold">Sold</th>
+                    <th className="px-4 py-4 font-semibold">Featured</th>
+                    <th className="px-4 py-4 font-semibold">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredItems.map((item) => {
+                    const id = item._id || item.id;
+                    return (
+                      <tr className="border-t border-slate-100" key={id}>
+                        <td className="px-4 py-4">
+                          <div className="flex items-center gap-3">
+                            <img alt={item.title} className="h-14 w-14 rounded-2xl object-cover" src={buildImageUrl(imageFromItem(item))} />
+                            <div>
+                              <p className="font-semibold text-slate-900">{item.title}</p>
+                              <p className="text-xs text-slate-500">{item.era || "No era set"}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 text-slate-700">EUR {Number(item.price || 0).toLocaleString()}</td>
+                        <td className="px-4 py-4 text-slate-700">{item.category?.name || item.category || "-"}</td>
+                        <td className="px-4 py-4">
+                          <button className={`rounded-full px-3 py-1 font-semibold ${item.sold ? "bg-rose-100 text-rose-700" : "bg-slate-100 text-slate-700"}`} onClick={() => handleToggle(item, "sold")} type="button">
+                            {item.sold ? "Sold" : "Available"}
+                          </button>
+                        </td>
+                        <td className="px-4 py-4">
+                          <button className={`rounded-full px-3 py-1 font-semibold ${item.featured ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-slate-700"}`} onClick={() => handleToggle(item, "featured")} type="button">
+                            {item.featured ? "Featured" : "Standard"}
+                          </button>
+                        </td>
+                        <td className="px-4 py-4">
+                          <div className="flex gap-2">
+                            <Link className="admin-button-secondary inline-flex w-auto" to={`/admin/items/${id}`}>
+                              Edit
+                            </Link>
+                            <button className="rounded-2xl bg-rose-600 px-4 py-2 font-semibold text-white" onClick={() => handleDelete(id)} type="button">
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
       ) : null}
     </AdminShell>
   );

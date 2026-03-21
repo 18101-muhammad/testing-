@@ -60,7 +60,7 @@ export default function AdminEnquiries() {
 
   return (
     <AdminShell title="Enquiries">
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3">
         <button className={filter === "all" ? "admin-button w-auto" : "admin-button-secondary w-auto"} onClick={() => setFilter("all")} type="button">
           All
         </button>
@@ -73,68 +73,124 @@ export default function AdminEnquiries() {
       {error ? <p className="rounded-3xl bg-red-50 p-6 text-red-700">{error}</p> : null}
 
       {!loading ? (
-        <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-soft">
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-left text-sm">
-              <thead className="bg-slate-50 text-slate-500">
-                <tr>
-                  <th className="px-4 py-4 font-semibold">Name</th>
-                  <th className="px-4 py-4 font-semibold">Email</th>
-                  <th className="px-4 py-4 font-semibold">Phone Number</th>
-                  <th className="px-4 py-4 font-semibold">Message</th>
-                  <th className="px-4 py-4 font-semibold">Date</th>
-                  <th className="px-4 py-4 font-semibold">Item</th>
-                  <th className="px-4 py-4 font-semibold">Status</th>
-                  <th className="px-4 py-4 font-semibold">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredEnquiries.map((enquiry) => {
-                  const id = enquiry._id || enquiry.id;
-                  const expanded = expandedId === id;
-                  return (
-                    <Fragment key={id}>
-                      <tr className={`cursor-pointer border-t border-slate-100 ${!enquiry.read ? "bg-amber-50/60" : ""}`} onClick={() => setExpandedId(expanded ? "" : id)}>
-                        <td className="px-4 py-4 font-semibold text-slate-900">{enquiry.name}</td>
-                        <td className="px-4 py-4 text-slate-600">{enquiry.email}</td>
-                        <td className="px-4 py-4 text-slate-600">{enquiry.phone || "-"}</td>
-                        <td className="px-4 py-4 text-slate-600">
-                          {(enquiry.message || "").slice(0, 60)}
-                          {(enquiry.message || "").length > 60 ? "..." : ""}
-                        </td>
-                        <td className="px-4 py-4 text-slate-600">{enquiry.createdAt ? new Date(enquiry.createdAt).toLocaleDateString() : "-"}</td>
-                        <td className="px-4 py-4 text-slate-600">{enquiry.item?.title || enquiry.itemReference || "-"}</td>
-                        <td className="px-4 py-4">
-                          <span className={`rounded-full px-3 py-1 font-semibold ${enquiry.read ? "bg-slate-100 text-slate-700" : "bg-amber-100 text-amber-700"}`}>
-                            {enquiry.read ? "Read" : "Unread"}
-                          </span>
-                        </td>
-                        <td className="px-4 py-4">
-                          <div className="flex gap-2">
-                            <button className="admin-button-secondary w-auto" onClick={(event) => { event.stopPropagation(); handleToggleRead(id); }} type="button">
-                              {enquiry.read ? "Mark Unread" : "Mark Read"}
-                            </button>
-                            <button className="rounded-2xl bg-rose-600 px-4 py-2 font-semibold text-white" onClick={(event) => { event.stopPropagation(); handleDelete(id); }} type="button">
-                              Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                      {expanded ? (
-                        <tr className="border-t border-slate-100 bg-slate-50">
-                          <td className="px-4 py-4 text-slate-700" colSpan="7">
-                            {enquiry.phone ? <p className="mb-2 text-sm font-semibold text-slate-800">Phone: {enquiry.phone}</p> : null}
-                            <p className="text-sm leading-7">{enquiry.message}</p>
+        <>
+          <div className="space-y-4 md:hidden">
+            {filteredEnquiries.map((enquiry) => {
+              const id = enquiry._id || enquiry.id;
+              const expanded = expandedId === id;
+              return (
+                <div className={`rounded-[24px] border border-slate-200 bg-white p-4 shadow-soft ${!enquiry.read ? "ring-1 ring-amber-200" : ""}`} key={id}>
+                  <button className="block w-full text-left" onClick={() => setExpandedId(expanded ? "" : id)} type="button">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="font-semibold text-slate-900">{enquiry.name}</p>
+                        <p className="mt-1 break-all text-sm text-slate-600">{enquiry.email}</p>
+                      </div>
+                      <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${enquiry.read ? "bg-slate-100 text-slate-700" : "bg-amber-100 text-amber-700"}`}>
+                        {enquiry.read ? "Read" : "Unread"}
+                      </span>
+                    </div>
+                    <div className="mt-3 space-y-1 text-sm text-slate-600">
+                      <p>{enquiry.phone || "-"}</p>
+                      <p>{enquiry.item?.title || enquiry.itemReference || "-"}</p>
+                      <p>{enquiry.createdAt ? new Date(enquiry.createdAt).toLocaleDateString() : "-"}</p>
+                    </div>
+                    <p className="mt-3 text-sm leading-7 text-slate-700">
+                      {(enquiry.message || "").slice(0, expanded ? enquiry.message.length : 120)}
+                      {!expanded && (enquiry.message || "").length > 120 ? "..." : ""}
+                    </p>
+                  </button>
+
+                  <div className="mt-4 grid grid-cols-2 gap-3">
+                    <button className="admin-button-secondary" onClick={() => handleToggleRead(id)} type="button">
+                      {enquiry.read ? "Mark Unread" : "Mark Read"}
+                    </button>
+                    <button className="rounded-2xl bg-rose-600 px-4 py-3 font-semibold text-white" onClick={() => handleDelete(id)} type="button">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-soft">
+            <div className="hidden overflow-x-auto md:block">
+              <table className="min-w-full text-left text-sm">
+                <thead className="bg-slate-50 text-slate-500">
+                  <tr>
+                    <th className="px-4 py-4 font-semibold">Name</th>
+                    <th className="px-4 py-4 font-semibold">Email</th>
+                    <th className="px-4 py-4 font-semibold">Phone Number</th>
+                    <th className="px-4 py-4 font-semibold">Message</th>
+                    <th className="px-4 py-4 font-semibold">Date</th>
+                    <th className="px-4 py-4 font-semibold">Item</th>
+                    <th className="px-4 py-4 font-semibold">Status</th>
+                    <th className="px-4 py-4 font-semibold">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredEnquiries.map((enquiry) => {
+                    const id = enquiry._id || enquiry.id;
+                    const expanded = expandedId === id;
+                    return (
+                      <Fragment key={id}>
+                        <tr className={`cursor-pointer border-t border-slate-100 ${!enquiry.read ? "bg-amber-50/60" : ""}`} onClick={() => setExpandedId(expanded ? "" : id)}>
+                          <td className="px-4 py-4 font-semibold text-slate-900">{enquiry.name}</td>
+                          <td className="px-4 py-4 text-slate-600">{enquiry.email}</td>
+                          <td className="px-4 py-4 text-slate-600">{enquiry.phone || "-"}</td>
+                          <td className="px-4 py-4 text-slate-600">
+                            {(enquiry.message || "").slice(0, 60)}
+                            {(enquiry.message || "").length > 60 ? "..." : ""}
+                          </td>
+                          <td className="px-4 py-4 text-slate-600">{enquiry.createdAt ? new Date(enquiry.createdAt).toLocaleDateString() : "-"}</td>
+                          <td className="px-4 py-4 text-slate-600">{enquiry.item?.title || enquiry.itemReference || "-"}</td>
+                          <td className="px-4 py-4">
+                            <span className={`rounded-full px-3 py-1 font-semibold ${enquiry.read ? "bg-slate-100 text-slate-700" : "bg-amber-100 text-amber-700"}`}>
+                              {enquiry.read ? "Read" : "Unread"}
+                            </span>
+                          </td>
+                          <td className="px-4 py-4">
+                            <div className="flex gap-2">
+                              <button
+                                className="admin-button-secondary w-auto"
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  handleToggleRead(id);
+                                }}
+                                type="button"
+                              >
+                                {enquiry.read ? "Mark Unread" : "Mark Read"}
+                              </button>
+                              <button
+                                className="rounded-2xl bg-rose-600 px-4 py-2 font-semibold text-white"
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  handleDelete(id);
+                                }}
+                                type="button"
+                              >
+                                Delete
+                              </button>
+                            </div>
                           </td>
                         </tr>
-                      ) : null}
-                    </Fragment>
-                  );
-                })}
-              </tbody>
-            </table>
+                        {expanded ? (
+                          <tr className="border-t border-slate-100 bg-slate-50">
+                            <td className="px-4 py-4 text-slate-700" colSpan="7">
+                              {enquiry.phone ? <p className="mb-2 text-sm font-semibold text-slate-800">Phone: {enquiry.phone}</p> : null}
+                              <p className="text-sm leading-7">{enquiry.message}</p>
+                            </td>
+                          </tr>
+                        ) : null}
+                      </Fragment>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        </>
       ) : null}
     </AdminShell>
   );

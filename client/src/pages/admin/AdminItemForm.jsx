@@ -174,7 +174,7 @@ export default function AdminItemForm() {
 
   return (
     <AdminShell title={isEditMode ? "Edit Item" : "Add New Item"}>
-      <form className="space-y-6 rounded-[28px] border border-slate-200 bg-white p-6 shadow-soft" onSubmit={handleSubmit}>
+      <form className="space-y-6 rounded-[24px] border border-slate-200 bg-white p-4 shadow-soft sm:rounded-[28px] sm:p-6" onSubmit={handleSubmit}>
         <div className="grid gap-6 lg:grid-cols-2">
           <div className="space-y-2">
             <label className="admin-label" htmlFor="title">
@@ -189,8 +189,8 @@ export default function AdminItemForm() {
               Price (EUR)
             </label>
             <div className="relative">
-              <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">€</span>
-              <input className="admin-input pl-8" id="price" min="0" name="price" onChange={handleChange} type="number" value={form.price} />
+              <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">EUR</span>
+              <input className="admin-input pl-14" id="price" min="0" name="price" onChange={handleChange} type="number" value={form.price} />
             </div>
             {errors.price ? <p className="text-sm text-red-600">{errors.price}</p> : null}
           </div>
@@ -267,7 +267,7 @@ export default function AdminItemForm() {
           {previews.length ? (
             <>
               <p className="text-sm text-slate-500">Drag to reorder images. The first image will be used as the main image.</p>
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-4" ref={previewGridRef}>
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4" ref={previewGridRef}>
                 {previews.map((preview, index) => (
                   <div className="overflow-hidden rounded-2xl border border-slate-200" key={`${preview.name}-${index}`}>
                     {index === 0 ? (
@@ -286,7 +286,7 @@ export default function AdminItemForm() {
         {isEditMode && existingImages.length ? (
           <div className="space-y-3">
             <label className="admin-label">Existing Images</label>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
               {existingImages.map((image) => {
                 const path = imagePath(image);
                 return (
@@ -304,7 +304,7 @@ export default function AdminItemForm() {
 
         {serverError ? <p className="rounded-2xl bg-red-50 p-4 text-red-700">{serverError}</p> : null}
 
-        <button className="admin-button" disabled={submitting} type="submit">
+        <button className="admin-button sticky bottom-3" disabled={submitting} type="submit">
           {submitting ? "Saving..." : isEditMode ? "Update Item" : "Create Item"}
         </button>
       </form>
