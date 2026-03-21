@@ -49,7 +49,7 @@ export default function Contact() {
   return (
     <>
       <Helmet>
-        <title>Contact | Twain Antiques & Curios</title>
+        <title>Contact | Never The Twain</title>
       </Helmet>
 
       <section className="section-shell pt-14">

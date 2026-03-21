@@ -34,7 +34,7 @@ export default function AdminLogin() {
   return (
     <>
       <Helmet>
-        <title>Admin Login | Twain Antiques & Curios</title>
+        <title>Admin Login | Never The Twain</title>
       </Helmet>
 
       <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-10">

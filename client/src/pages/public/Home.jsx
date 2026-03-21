@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Twain Antiques & Curios | Curiosities Collected From the Edge of Time</title>
+        <title>Never The Twain | Timeless Pieces, Enduring Stories</title>
         <meta
           content="Discover elegant antiques, curated vintage furniture, and one-of-a-kind decorative pieces."
           name="description"
@@ -44,9 +44,9 @@ export default function Home() {
 
         <div className="relative mx-auto max-w-5xl px-4 pb-16 pt-16 text-center sm:px-6 lg:px-8 lg:pb-20 lg:pt-20">
           <div className="animate-fade-in space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">Twain Antiques & Curios / Maynooth</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">Never The Twain / Maynooth</p>
             <h1 className="mx-auto max-w-4xl font-display text-4xl leading-[1] sm:text-5xl lg:text-6xl">
-              Curiosities Collected From the Edge of Time
+              Decorative antiques for rooms that prefer character over noise.
             </h1>
             <p className="mx-auto max-w-2xl text-base leading-8 text-[#efe6d5]/80 sm:text-lg">
               A slower collection of antiques, curios, and quietly striking furnishings chosen for proportion, texture, and lasting atmosphere.

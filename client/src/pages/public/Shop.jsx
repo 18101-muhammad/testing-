@@ -73,7 +73,7 @@ export default function Shop() {
   return (
     <>
       <Helmet>
-        <title>Shop | Twain Antiques & Curios</title>
+        <title>Shop | Never The Twain</title>
       </Helmet>
 
       <section className="section-shell pt-14">
