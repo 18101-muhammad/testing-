@@ -38,7 +38,7 @@
 
 @layer components {
   .section-shell {
-    @apply mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24;
+    @apply mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24;
   }
 
   .section-heading {
@@ -52,13 +52,13 @@
 
   .section-title {
     color: var(--ntt-olive);
-    @apply mt-3 font-display text-4xl leading-tight sm:text-5xl;
+    @apply mt-3 font-display text-3xl leading-tight sm:text-4xl lg:text-5xl;
   }
 
   .btn-primary {
     background-color: var(--ntt-olive);
     color: #f7f2e7;
-    @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold shadow-soft;
+    @apply inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold shadow-soft sm:px-6 sm:text-base;
   }
 
   .btn-primary:hover {
@@ -69,7 +69,7 @@
     border: 1px solid rgba(49, 56, 44, 0.16);
     color: var(--ntt-olive);
     background-color: rgba(255, 255, 255, 0.45);
-    @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold backdrop-blur-sm;
+    @apply inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold backdrop-blur-sm sm:px-6 sm:text-base;
   }
 
   .btn-secondary:hover {
@@ -114,7 +114,7 @@
   .editorial-card {
     border: 1px solid var(--ntt-line);
     background: rgba(255, 255, 255, 0.72);
-    @apply rounded-[30px] backdrop-blur-sm;
+    @apply rounded-[24px] backdrop-blur-sm sm:rounded-[30px];
   }
 
   .hero-number {
