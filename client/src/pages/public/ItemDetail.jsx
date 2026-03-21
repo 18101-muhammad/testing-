@@ -211,7 +211,7 @@ export default function ItemDetail() {
             <div className="editorial-card rounded-[34px] bg-[#232820] p-6 text-[#efe6d5] shadow-soft">
               <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#d6b57d]">Appointments</p>
               <p className="mt-4 text-sm leading-8 text-[#efe6d5]/78">
-                If you would like more images, dimensions, or a private viewing arrangement, send an enquiry and we will come back with detail rather than a generic stock reply.
+                If you would like more images, dimensions, or a private viewing, send an enquiry and we will reply with detail rather than a generic stock response.
               </p>
             </div>
           </div>

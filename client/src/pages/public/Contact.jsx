@@ -68,7 +68,7 @@ export default function Contact() {
               <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">Appointments & Enquiries</p>
               <h1 className="mt-4 max-w-xl font-display text-5xl leading-tight">For sourcing requests, private viewings, and purchase enquiries.</h1>
               <p className="mt-5 max-w-xl text-sm leading-8 text-[#efe6d5]/76">
-                Tell us what you are looking for, which room you are shaping, or which piece has caught your attention. A more detailed enquiry usually leads to a better recommendation.
+                Tell us what you are looking for, which room you are shaping, or which piece has caught your attention. The more context you give, the better the recommendation.
               </p>
             </div>
 

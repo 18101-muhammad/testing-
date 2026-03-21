@@ -33,7 +33,7 @@ export default function Navbar() {
               Twain Antiques & Curios
             </Link>
             <span className={`hidden text-[10px] font-semibold uppercase tracking-[0.34em] md:block ${scrolled ? "text-[#d8ccb6]/70" : "text-[#6a6457]"}`}>
-              Curiosities Collected From the Edge of Time
+              Collected Objects For Rooms With Memory
             </span>
           </div>
         </div>

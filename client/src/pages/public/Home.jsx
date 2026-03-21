@@ -32,9 +32,9 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Twain Antiques & Curios | Curiosities Collected From the Edge of Time</title>
+        <title>Twain Antiques & Curios | Collected Objects For Rooms With Memory</title>
         <meta
-          content="Discover elegant antiques, curated vintage furniture, and one-of-a-kind decorative pieces."
+          content="Discover antiques, curios, and decorative objects chosen for atmosphere, proportion, and quiet character."
           name="description"
         />
       </Helmet>
@@ -46,10 +46,10 @@ export default function Home() {
           <div className="animate-fade-in space-y-6">
             <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#d6b57d]">Twain Antiques & Curios / Maynooth</p>
             <h1 className="mx-auto max-w-4xl font-display text-4xl leading-[1] sm:text-5xl lg:text-6xl">
-              Curiosities Collected From the Edge of Time
+              Collected Objects For Rooms With Memory
             </h1>
             <p className="mx-auto max-w-2xl text-base leading-8 text-[#efe6d5]/80 sm:text-lg">
-              A slower collection of antiques, curios, and quietly striking furnishings chosen for proportion, texture, and lasting atmosphere.
+              Antiques, curios, and decorative pieces selected for tone, proportion, and the kind of presence that settles a room.
             </p>
 
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -89,9 +89,9 @@ export default function Home() {
         <div className="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-5">
             <p className="eyebrow">Featured Collection</p>
-            <h2 className="section-title">A tighter, more contemporary way to browse antique pieces</h2>
+            <h2 className="section-title">Featured pieces with presence, texture, and restraint</h2>
             <p className="max-w-md text-sm leading-8 text-[#5e5a50]">
-              Instead of leading with imagery, the homepage now leads with the shape of the collection itself: category, title, era, and intent.
+              A small selection of pieces chosen to give the collection its tone: sculptural, decorative, and quietly distinctive.
             </p>
           </div>
 
@@ -115,7 +115,7 @@ export default function Home() {
           <div className="section-heading">
             <div>
               <p className="eyebrow">Browse By Category</p>
-              <h2 className="section-title">Collected by material, mood, and decorative use</h2>
+              <h2 className="section-title">Browse by category, material language, and decorative mood</h2>
             </div>
           </div>
 
