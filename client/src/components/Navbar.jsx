@@ -25,8 +25,17 @@ export default function Navbar() {
         }`}
       >
         <div className="flex items-center gap-4">
-          <div className={`hidden h-10 w-10 items-center justify-center rounded-full border text-[10px] font-semibold uppercase tracking-[0.24em] md:flex ${scrolled ? "border-white/12 text-[#d8ccb6]" : "border-[#2f382d]/12 text-[#5e594d]"}`}>
-            TAC
+          <div
+            className={`relative hidden h-11 w-11 items-center justify-center rounded-full border md:flex ${
+              scrolled ? "border-white/12 bg-white/[0.03] text-[#efe6d5]" : "border-[#2f382d]/12 bg-white/55 text-[#2f382d]"
+            }`}
+          >
+            <span
+              className={`pointer-events-none absolute inset-[4px] rounded-full border ${
+                scrolled ? "border-white/10" : "border-[#2f382d]/10"
+              }`}
+            />
+            <span className="relative font-display text-[0.72rem] tracking-[0.18em]">TAC</span>
           </div>
           <div className="flex flex-col">
             <Link className={`font-display text-2xl tracking-[0.08em] ${scrolled ? "text-[#f0e8d8]" : "text-[#2b3427]"}`} to="/">
