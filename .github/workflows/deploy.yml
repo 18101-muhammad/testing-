@@ -27,56 +27,32 @@ jobs:
         run: |
           git archive --format=tar.gz --output=release.tar.gz HEAD
 
-      - name: Configure SSH access
-        run: |
-          mkdir -p ~/.ssh
-          printf '%s\n' '${{ secrets.EC2_SSH_KEY }}' > ~/.ssh/ec2_key
-          chmod 600 ~/.ssh/ec2_key
-          cat <<'EOF' > ~/.ssh/config
-          Host ec2-deploy-target
-            HostName ${{ secrets.EC2_HOST }}
-            User ${{ secrets.EC2_USERNAME }}
-            Port ${{ secrets.EC2_PORT }}
-            IdentityFile ~/.ssh/ec2_key
-            ServerAliveInterval 30
-            ServerAliveCountMax 10
-            StrictHostKeyChecking no
-            UserKnownHostsFile /dev/null
-            ConnectTimeout 30
-          EOF
-
       - name: Copy release files to EC2
-        shell: bash
-        run: |
-          set -euo pipefail
-          target_dir="/home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}"
-          ssh ec2-deploy-target "mkdir -p '${target_dir}/deploy'"
-
-          for attempt in 1 2 3 4 5; do
-            if scp release.tar.gz ec2-deploy-target:"${target_dir}/release.tar.gz" && \
-               scp deploy/ec2-deploy.sh ec2-deploy-target:"${target_dir}/deploy/ec2-deploy.sh"; then
-              exit 0
-            fi
-
-            if [ "$attempt" -eq 5 ]; then
-              echo "File copy failed after ${attempt} attempts." >&2
-              exit 1
-            fi
-
-            echo "File copy attempt ${attempt} failed. Retrying in 20 seconds..." >&2
-            sleep 20
-          done
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+          timeout: 2m
+          command_timeout: 20m
+          source: "release.tar.gz,deploy/ec2-deploy.sh"
+          target: "/home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}"
 
       - name: Run remote deploy
-        shell: bash
-        run: |
-          set -euo pipefail
-          ssh ec2-deploy-target "
-            chmod +x /home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}/deploy/ec2-deploy.sh &&
-            APP_NAME='${{ env.APP_NAME }}' \
-            APP_SLUG='${{ env.APP_SLUG }}' \
-            DEPLOY_USER='${{ secrets.EC2_USERNAME }}' \
-            DEPLOY_ROOT='${{ env.DEPLOY_ROOT }}' \
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+          script_stop: true
+          command_timeout: 30m
+          script: |
+            chmod +x /home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}/deploy/ec2-deploy.sh
+            APP_NAME="${{ env.APP_NAME }}" \
+            APP_SLUG="${{ env.APP_SLUG }}" \
+            DEPLOY_USER="${{ secrets.EC2_USERNAME }}" \
+            DEPLOY_ROOT="${{ env.DEPLOY_ROOT }}" \
             /home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}/deploy/ec2-deploy.sh \
             /home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}/release.tar.gz
-          "
