@@ -41,7 +41,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script_stop: true
-          command_timeout: 30m
           script: |
             chmod +x /home/${{ secrets.EC2_USERNAME }}/deployments/${{ github.run_id }}/deploy/ec2-deploy.sh
             APP_NAME="${{ env.APP_NAME }}" \
