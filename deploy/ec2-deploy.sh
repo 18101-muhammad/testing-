@@ -44,7 +44,7 @@ if [[ -f package-lock.json ]]; then
 else
   npm install --omit=dev --no-audit --no-fund
 fi
-npm run init-db
+npm run bootstrap
 popd > /dev/null
 
 pushd "${RELEASE_DIR}/client" > /dev/null
