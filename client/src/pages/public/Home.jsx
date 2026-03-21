@@ -101,8 +101,8 @@ export default function Home() {
 
             {!loading && !error ? (
               <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                {featuredItems.slice(0, 4).map((item) => (
-                  <ItemCard item={item} key={item._id || item.id} />
+                {featuredItems.slice(0, 4).map((item, index) => (
+                  <ItemCard eager={index < 2} item={item} key={item._id || item.id} />
                 ))}
               </div>
             ) : null}

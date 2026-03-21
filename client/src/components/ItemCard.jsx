@@ -10,7 +10,7 @@ const firstImage = (item) => {
   return item?.image || item?.imageUrl || item?.thumbnail;
 };
 
-export default function ItemCard({ item }) {
+export default function ItemCard({ item, eager = false }) {
   const imageUrl = buildImageUrl(firstImage(item));
 
   return (
@@ -23,7 +23,8 @@ export default function ItemCard({ item }) {
           alt={item.title}
           className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]"
           decoding="async"
-          loading="lazy"
+          fetchPriority={eager ? "high" : "auto"}
+          loading={eager ? "eager" : "lazy"}
           src={imageUrl}
         />
         <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/55 via-black/10 to-transparent opacity-95" />

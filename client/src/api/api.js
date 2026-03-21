@@ -36,7 +36,7 @@ const authConfig = (token = getStoredToken(), extraConfig = {}) => ({
 
 export const buildImageUrl = (path) => {
   if (!path) {
-    return "https://placehold.co/900x700/f0e6cc/1a2744?text=Never+The+Twain";
+    return "https://placehold.co/900x700/f0e6cc/1a2744?text=Twain+Antiques+%26+Curios";
   }
 
   if (CURRENT_ORIGIN && /^\/uploads\//i.test(path)) {
