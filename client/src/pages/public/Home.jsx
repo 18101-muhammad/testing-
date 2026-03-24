@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Twain Antiques & Curios | Collected Objects For Rooms With Memory</title>
+        <title>Twain Antiques & Curios | Curiosities Collected From the Edge of Time</title>
         <meta
           content="Discover antiques, curios, and decorative objects chosen for atmosphere, proportion, and quiet character."
           name="description"
@@ -46,7 +46,7 @@ export default function Home() {
           <div className="animate-fade-in space-y-5 sm:space-y-6">
             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#d6b57d] sm:text-xs sm:tracking-[0.34em]">Twain Antiques & Curios / Maynooth</p>
             <h1 className="mx-auto max-w-4xl font-display text-[2.55rem] leading-[0.98] sm:text-5xl lg:text-6xl">
-              Collected Objects For Rooms With Memory
+              Curiosities Collected From the Edge of Time
             </h1>
             <p className="mx-auto max-w-2xl text-[15px] leading-7 text-[#efe6d5]/80 sm:text-lg sm:leading-8">
               Antiques, curios, and decorative pieces selected for tone, proportion, and the kind of presence that settles a room.

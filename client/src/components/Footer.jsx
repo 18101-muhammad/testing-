@@ -11,7 +11,7 @@ export default function Footer() {
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <p className="text-sm leading-8 text-[#efe6d5]/70">
-              Collected Objects For Rooms With Memory.
+              Curiosities Collected From the Edge of Time.
             </p>
             <p className="text-sm leading-8 text-[#efe6d5]/58">
               The collection is intentionally small, slower to grow, and arranged for people who care how objects sit together over time.
@@ -71,7 +71,7 @@ export default function Footer() {
       <div className="border-t border-white/8">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4 text-xs uppercase tracking-[0.24em] text-[#efe6d5]/50 sm:flex-row sm:justify-between sm:px-6 lg:px-8">
           <span>Twain Antiques & Curios</span>
-          <span>Collected Objects For Rooms With Memory</span>
+          <span>Curiosities Collected From the Edge of Time</span>
         </div>
       </div>
     </footer>
