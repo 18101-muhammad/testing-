@@ -33,6 +33,10 @@ export default function ItemDetail() {
   const touchEndX = useRef(null);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [id]);
+
+  useEffect(() => {
     const fetchItem = async () => {
       try {
         setLoading(true);
