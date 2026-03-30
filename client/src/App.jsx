@@ -1,3 +1,4 @@
+import { useLayoutEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
@@ -13,12 +14,41 @@ import Home from "./pages/public/Home";
 import ItemDetail from "./pages/public/ItemDetail";
 import Shop from "./pages/public/Shop";
 
+function ProductRouteScrollReset() {
+  const location = useLocation();
+
+  useLayoutEffect(() => {
+    if (!location.pathname.startsWith("/shop/")) {
+      return;
+    }
+
+    const previousScrollRestoration = window.history.scrollRestoration;
+    const resetScroll = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    window.history.scrollRestoration = "manual";
+    resetScroll();
+    const frameId = window.requestAnimationFrame(resetScroll);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, [location.pathname]);
+
+  return null;
+}
+
 function AppLayout() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
 
   return (
     <div className="min-h-screen bg-antique-cream text-antique-dark">
+      <ProductRouteScrollReset />
       {!isAdminRoute ? <Navbar /> : null}
 
       <Routes>

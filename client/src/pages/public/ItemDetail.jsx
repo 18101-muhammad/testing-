@@ -45,6 +45,23 @@ export default function ItemDetail() {
     return () => window.cancelAnimationFrame(frameId);
   }, [id]);
 
+  useLayoutEffect(() => {
+    if (loading) {
+      return;
+    }
+
+    const resetScroll = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    resetScroll();
+    const timeoutId = window.setTimeout(resetScroll, 0);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [loading]);
+
   useEffect(() => {
     const fetchItem = async () => {
       try {
