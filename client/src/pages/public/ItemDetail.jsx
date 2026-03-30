@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { buildImageUrl, getItemById, getItems, submitEnquiry } from "../../api/api";
 import ItemCard from "../../components/ItemCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
@@ -27,6 +28,9 @@ export default function ItemDetail() {
   const [buyNowLoading, setBuyNowLoading] = useState(false);
   const [buyNowError, setBuyNowError] = useState("");
   const [buyNowSuccess, setBuyNowSuccess] = useState("");
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const touchStartX = useRef(null);
+  const touchEndX = useRef(null);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -58,6 +62,42 @@ export default function ItemDetail() {
   }, [id]);
 
   const gallery = useMemo(() => normalizeImages(item), [item]);
+  const selectedImageIndex = Math.max(gallery.findIndex((image) => image === selectedImage), 0);
+  const showPreviousImage = useCallback(() => {
+    if (!gallery.length) return;
+    const nextIndex = selectedImageIndex <= 0 ? gallery.length - 1 : selectedImageIndex - 1;
+    setSelectedImage(gallery[nextIndex]);
+  }, [gallery, selectedImageIndex]);
+  const showNextImage = useCallback(() => {
+    if (!gallery.length) return;
+    const nextIndex = selectedImageIndex >= gallery.length - 1 ? 0 : selectedImageIndex + 1;
+    setSelectedImage(gallery[nextIndex]);
+  }, [gallery, selectedImageIndex]);
+  const openLightboxAt = useCallback((image) => {
+    setSelectedImage(image);
+    setLightboxOpen(true);
+  }, []);
+
+  useEffect(() => {
+    if (!lightboxOpen) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setLightboxOpen(false);
+      if (event.key === "ArrowLeft") showPreviousImage();
+      if (event.key === "ArrowRight") showNextImage();
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [gallery.length, lightboxOpen, showNextImage, showPreviousImage]);
 
   if (loading) {
     return <LoadingSpinner label="Loading antique details..." />;
@@ -114,14 +154,12 @@ export default function ItemDetail() {
       <section className="section-shell pt-14">
         <div className="grid gap-10 xl:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-4">
-            <div className="editorial-outline image-sheen editorial-card relative overflow-hidden rounded-[34px] shadow-soft">
-              <img
-                alt={item.title}
-                className="aspect-[4/3] w-full bg-[#e9dfcf] object-contain p-4"
-                decoding="async"
-                fetchPriority="high"
-                src={mainImage}
-              />
+            <button
+              className="editorial-outline editorial-card relative block w-full overflow-hidden rounded-[34px] shadow-soft"
+              onClick={() => openLightboxAt(selectedImage || gallery[0])}
+              type="button"
+            >
+              <img alt={item.title} className="aspect-[4/3] w-full bg-[#e9dfcf] object-contain p-4" decoding="async" fetchPriority="high" src={mainImage} />
               {item.sold ? (
                 <span className="absolute left-5 top-5 rounded-full bg-[#5c2f2b] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">
                   Sold
@@ -131,7 +169,7 @@ export default function ItemDetail() {
                 <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#d6b57d]">Main image</p>
                 <p className="mt-2 font-display text-2xl leading-tight">{item.title}</p>
               </div>
-            </div>
+            </button>
 
             {gallery.length > 1 ? (
               <div className="grid grid-cols-4 gap-3">
@@ -139,7 +177,7 @@ export default function ItemDetail() {
                   <button
                     className={`overflow-hidden rounded-2xl border p-1 ${selectedImage === image ? "border-[#b68a3c] bg-[#f0e7d7]" : "border-[#2f382d]/10 bg-white/70"}`}
                     key={image}
-                    onClick={() => setSelectedImage(image)}
+                    onClick={() => openLightboxAt(image)}
                     type="button"
                   >
                     <img alt={item.title} className="aspect-square w-full rounded-xl object-cover" decoding="async" loading="lazy" src={buildImageUrl(image)} />
@@ -283,6 +321,113 @@ export default function ItemDetail() {
             </div>
           </div>
         </section>
+      ) : null}
+
+      {lightboxOpen ? (
+        <div
+          className="fixed inset-0 z-[70] bg-black/95"
+          onClick={() => setLightboxOpen(false)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="absolute left-4 right-4 top-4 z-[2] flex items-center justify-between gap-4 text-white">
+            <div className="min-w-0">
+              <p className="truncate font-display text-xl sm:text-2xl">{item.title}</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.24em] text-white/60">
+                {selectedImageIndex + 1} / {gallery.length}
+              </p>
+            </div>
+            <button
+              aria-label="Close image viewer"
+              className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm"
+              onClick={() => setLightboxOpen(false)}
+              type="button"
+            >
+              Close
+            </button>
+          </div>
+
+          {gallery.length > 1 ? (
+            <>
+              <button
+                aria-label="Previous image"
+                className="absolute left-3 top-1/2 z-[2] -translate-y-1/2 rounded-full border border-white/15 bg-white/10 px-4 py-3 text-white backdrop-blur-sm"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  showPreviousImage();
+                }}
+                type="button"
+              >
+                ‹
+              </button>
+              <button
+                aria-label="Next image"
+                className="absolute right-3 top-1/2 z-[2] -translate-y-1/2 rounded-full border border-white/15 bg-white/10 px-4 py-3 text-white backdrop-blur-sm"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  showNextImage();
+                }}
+                type="button"
+              >
+                ›
+              </button>
+            </>
+          ) : null}
+
+          <div
+            className="flex h-full items-center justify-center px-4 pb-24 pt-20 sm:px-8"
+            onClick={(event) => event.stopPropagation()}
+            onTouchEnd={() => {
+              if (touchStartX.current == null || touchEndX.current == null) return;
+              const distance = touchStartX.current - touchEndX.current;
+              if (Math.abs(distance) > 50) {
+                if (distance > 0) showNextImage();
+                else showPreviousImage();
+              }
+              touchStartX.current = null;
+              touchEndX.current = null;
+            }}
+            onTouchStart={(event) => {
+              touchStartX.current = event.changedTouches[0]?.clientX ?? null;
+              touchEndX.current = null;
+            }}
+            onTouchMove={(event) => {
+              touchEndX.current = event.changedTouches[0]?.clientX ?? null;
+            }}
+          >
+            <TransformWrapper doubleClick={{ mode: "zoomIn" }} pinch={{ step: 5 }} panning={{ velocityDisabled: true }} wheel={{ step: 0.15 }}>
+              <TransformComponent
+                contentClass="flex items-center justify-center"
+                wrapperClass="!h-full !w-full !max-w-6xl"
+              >
+                <img
+                  alt={item.title}
+                  className="max-h-[78vh] w-auto max-w-full object-contain"
+                  decoding="async"
+                  fetchPriority="high"
+                  src={buildImageUrl(gallery[selectedImageIndex])}
+                />
+              </TransformComponent>
+            </TransformWrapper>
+          </div>
+
+          {gallery.length > 1 ? (
+            <div className="absolute inset-x-0 bottom-0 z-[2] overflow-x-auto px-4 pb-4">
+              <div className="mx-auto flex w-max gap-3 rounded-[24px] border border-white/10 bg-black/35 p-3 backdrop-blur-sm">
+                {gallery.map((image, index) => (
+                  <button
+                    className={`overflow-hidden rounded-2xl border ${selectedImageIndex === index ? "border-[#d6b57d]" : "border-white/10"}`}
+                    key={image}
+                    onClick={() => setSelectedImage(image)}
+                    type="button"
+                  >
+                    <img alt={`${item.title} ${index + 1}`} className="h-16 w-16 object-cover" src={buildImageUrl(image)} />
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : null}
+        </div>
       ) : null}
     </>
   );
