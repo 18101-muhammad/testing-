@@ -82,16 +82,6 @@ export default function Navbar() {
               {link.label}
             </NavLink>
           ))}
-          <Link
-            className={`ml-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.26em] ${
-              scrolled
-                ? "border-white/15 bg-white/5 text-[#efe6d5] hover:bg-white/10"
-                : "border-[#2f382d]/12 bg-white/55 text-[#2b3427] hover:bg-white"
-            }`}
-            to="/contact"
-          >
-            Arrange Visit
-          </Link>
         </nav>
       </div>
 
@@ -112,13 +102,6 @@ export default function Navbar() {
                 {link.label}
               </NavLink>
             ))}
-            <Link
-              className="rounded-2xl border border-[#2f382d]/10 px-4 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-[#475141] hover:bg-[#2b3427]/5"
-              onClick={() => setOpen(false)}
-              to="/contact"
-            >
-              Arrange Visit
-            </Link>
           </div>
         </nav>
       ) : null}
