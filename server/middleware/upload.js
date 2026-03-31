@@ -24,9 +24,6 @@ const upload = multer({
 
     cb(null, true);
   },
-  limits: {
-    files: 10,
-  },
 });
 
 const processUploadedImages = async (req, res, next) => {
@@ -69,4 +66,4 @@ const processUploadedImages = async (req, res, next) => {
   }
 };
 
-module.exports = [upload.array("images", 10), processUploadedImages];
+module.exports = [upload.array("images"), processUploadedImages];
