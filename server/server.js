@@ -40,7 +40,14 @@ app.use((req, res) => {
 
 app.use((err, _req, res, _next) => {
   console.error(err.stack);
-  res.status(500).json({ error: err.message || "Server error" });
+
+  if (err.name === "MulterError") {
+    const statusCode = err.code === "LIMIT_FILE_SIZE" ? 413 : 400;
+    res.status(statusCode).json({ error: err.message || "Upload failed" });
+    return;
+  }
+
+  res.status(err.statusCode || 500).json({ error: err.message || "Server error" });
 });
 
 app.listen(process.env.PORT, () => {

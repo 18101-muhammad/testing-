@@ -31,6 +31,17 @@ const parseItemRow = (row) => ({
   },
 });
 
+const removeUploadedFiles = (files = []) => {
+  files.forEach((file) => {
+    if (file?.path) {
+      deleteFile(`/uploads/${file.filename}`);
+    }
+  });
+};
+
+const getCategoryById = (categoryId) =>
+  db.prepare("SELECT id, name, slug FROM categories WHERE id = ?").get(categoryId);
+
 router.get("/", (_req, res) => {
   try {
     const items = db
@@ -58,9 +69,24 @@ router.get("/", (_req, res) => {
 router.post("/", upload, (req, res) => {
   try {
     const { title, description, price, category, era, condition, featured, sold } = req.body;
+    const categoryId = Number(category);
+    const numericPrice = Number(price);
 
     if (!title || !description || !price || !category) {
+      removeUploadedFiles(req.files);
       res.status(400).json({ error: "Title, description, price, and category are required" });
+      return;
+    }
+
+    if (!Number.isFinite(numericPrice) || numericPrice < 0) {
+      removeUploadedFiles(req.files);
+      res.status(400).json({ error: "Price must be a valid non-negative number" });
+      return;
+    }
+
+    if (!Number.isInteger(categoryId) || !getCategoryById(categoryId)) {
+      removeUploadedFiles(req.files);
+      res.status(400).json({ error: "A valid category is required" });
       return;
     }
 
@@ -75,8 +101,8 @@ router.post("/", upload, (req, res) => {
       .run(
         title.trim(),
         description.trim(),
-        Number(price),
-        Number(category),
+        numericPrice,
+        categoryId,
         era || null,
         condition || null,
         JSON.stringify(imagePaths),
@@ -101,6 +127,7 @@ router.post("/", upload, (req, res) => {
 
     res.status(201).json({ item: parseItemRow(created) });
   } catch (error) {
+    removeUploadedFiles(req.files);
     res.status(500).json({ error: error.message || "Failed to create item" });
   }
 });
@@ -126,6 +153,8 @@ router.put("/:id", upload, (req, res) => {
       removedImages,
       removeImages,
     } = req.body;
+    const categoryId = category ? Number(category) : existing.category_id;
+    const numericPrice = price !== undefined ? Number(price) : existing.price;
 
     let currentImages = normalizeImages(existing.images);
     const uploadedImages = (req.files || []).map((file) => `/uploads/${file.filename}`);
@@ -143,6 +172,19 @@ router.put("/:id", upload, (req, res) => {
     }
 
     imagesToRemove = [...new Set(imagesToRemove.filter(Boolean))];
+
+    if (price !== undefined && (!Number.isFinite(numericPrice) || numericPrice < 0)) {
+      removeUploadedFiles(req.files);
+      res.status(400).json({ error: "Price must be a valid non-negative number" });
+      return;
+    }
+
+    if (!Number.isInteger(categoryId) || !getCategoryById(categoryId)) {
+      removeUploadedFiles(req.files);
+      res.status(400).json({ error: "A valid category is required" });
+      return;
+    }
+
     imagesToRemove.forEach((imagePath) => deleteFile(imagePath));
     currentImages = currentImages.filter((imagePath) => !imagesToRemove.includes(imagePath));
     currentImages = currentImages.concat(uploadedImages);
@@ -156,8 +198,8 @@ router.put("/:id", upload, (req, res) => {
     ).run(
       title ? title.trim() : existing.title,
       description ? description.trim() : existing.description,
-      price !== undefined ? Number(price) : existing.price,
-      category ? Number(category) : existing.category_id,
+      numericPrice,
+      categoryId,
       era !== undefined ? era : existing.era,
       condition !== undefined ? condition : existing.condition,
       JSON.stringify(currentImages),
@@ -183,6 +225,7 @@ router.put("/:id", upload, (req, res) => {
 
     res.json({ item: parseItemRow(updated) });
   } catch (error) {
+    removeUploadedFiles(req.files);
     res.status(500).json({ error: error.message || "Failed to update item" });
   }
 });

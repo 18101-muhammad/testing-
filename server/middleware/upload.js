@@ -16,7 +16,9 @@ const upload = multer({
     const extension = path.extname(file.originalname).toLowerCase();
 
     if (!allowedTypes.includes(extension)) {
-      cb(new Error("Only jpg, jpeg, png, and webp files are allowed."));
+      const error = new Error("Only jpg, jpeg, png, and webp files are allowed.");
+      error.statusCode = 400;
+      cb(error);
       return;
     }
 
@@ -62,6 +64,7 @@ const processUploadedImages = async (req, res, next) => {
 
     next();
   } catch (error) {
+    error.statusCode = error.statusCode || 400;
     next(error);
   }
 };
